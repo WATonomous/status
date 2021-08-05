@@ -53,9 +53,7 @@ export default function Home() {
         <div>
             <Head>
                 <title>
-                    {process.env.NEXT_PUBLIC_NAME
-                        ? process.env.NEXT_PUBLIC_NAME
-                        : "Healthchecks Front"}
+                    {"WATonomous Services"}
                 </title>
                 <meta
                     name="description"
@@ -63,11 +61,7 @@ export default function Home() {
                 />
                 <meta
                     property="og:title"
-                    content={
-                        process.env.NEXT_PUBLIC_NAME
-                            ? process.env.NEXT_PUBLIC_NAME
-                            : "Healthchecks Front"
-                    }
+                    content={"WATonomous Services"}
                 />
                 <meta property="og:image" content="og_image.png" />
                 <meta

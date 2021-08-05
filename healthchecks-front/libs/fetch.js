@@ -5,7 +5,7 @@ export default async function fetcher(...args) {
         ...args[1],
         headers: {
             Accept: "application/json",
-            "X-Api-Key": process.env.NEXT_PUBLIC_APIKEY,
+            "X-Api-Key": "QjOgLD7b2yFA3WWjzO1ny40UM7kxk2lJ"
         },
     };
 
