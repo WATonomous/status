@@ -11,7 +11,7 @@ Both are experimental MVPs and can be replaced without worrying about losing exi
 
 ```bash
 cd healthchecks-front
-npm install
+npm ci # install dependencies without updating them
 ./node_modules/.bin/next build
 ./node_modules/.bin/next export
 cp -r out/* ..
