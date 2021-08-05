@@ -5,7 +5,7 @@ Still trying to see what this repo will be about. For now it's a barebones statu
 - `index.html` is adapted from [healthchecks-front](https://github.com/nicoandrade/healthchecks-front). The source code is in `./healthchecks-front`. This only supports one Healthchecks.io project.
 - `all.html` is adapted from [healthchecks/dashboard](https://github.com/healthchecks/dashboard). This supports multiple Healthchecks.io projects, but the UI is not as intuitive as `index.html` at first glance.
 
-Both are experimental MVPs and can be replaced without too worrying about losing existing work.
+Both are experimental MVPs and can be replaced without worrying about losing existing work.
 
 ### Compiliing healthchecks-front
 
