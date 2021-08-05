@@ -7,3 +7,12 @@ Still trying to see what this repo will be about. For now it's a barebones statu
 
 Both are experimental MVPs and can be replaced without too worrying about losing existing work.
 
+### Compiliing healthchecks-front
+
+```bash
+cd healthchecks-front
+npm install
+./node_modules/.bin/next build
+./node_modules/.bin/next export
+cp -r out/* ..
+```
