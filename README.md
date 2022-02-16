@@ -18,4 +18,6 @@ cp -r out/* ..
 ```
 
 ### Start Server
+```
 npm start
+```
