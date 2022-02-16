@@ -16,3 +16,6 @@ npm ci # install dependencies without updating them
 ./node_modules/.bin/next export
 cp -r out/* ..
 ```
+
+### Start Server
+npm start
