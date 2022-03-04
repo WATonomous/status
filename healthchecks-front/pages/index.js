@@ -146,21 +146,21 @@ export default function Home() {
                         <p> 
                             <b> Teleport </b> <br/> 
                             Please ensure you have filled out the
-                            <a className="text-blue-500" href="https://goteleport.com/docs/server-access/guides/tsh/">
+                            <a className="text-blue-500" target="_blank" rel="noopener noreferrer" href="https://forms.gle/rhT1Pe9Z43Y5Ri8P8">
                                 {" "} Member Form {" "}
                             </a>
                              first. 
                              <br/> Then, 
-                            <a className="text-blue-500" href="https://goteleport.com/docs/server-access/guides/tsh/">
+                            <a className="text-blue-500" target="_blank" rel="noopener noreferrer" href="https://goteleport.com/docs/server-access/guides/tsh/">
                                 {" "} follow the following guide to download the CLI tool. {" "}
                             </a>
                             <br/>
                             If you want to set up remote development with VSCode,
-                            <a className="text-blue-500" href="https://goteleport.com/docs/server-access/guides/vscode/">
-                                {" "} please follow the following guide
+                            <a className="text-blue-500" target="_blank" rel="noopener noreferrer" href="https://goteleport.com/docs/server-access/guides/vscode/">
+                                {" "} please use the following guide
                             </a> <br/>
                             <b>Agent Forwarding</b> <br/>
-                            <a className="text-blue-500" href="https://docs.github.com/en/developers/overview/using-ssh-agent-forwarding">
+                            <a className="text-blue-500" target="_blank" rel="noopener noreferrer" href="https://docs.github.com/en/developers/overview/using-ssh-agent-forwarding">
                                 Read the following guide.
                             </a>
                         </p>

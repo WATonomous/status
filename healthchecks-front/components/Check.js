@@ -22,20 +22,26 @@ const getInstructionBody = (name, machineName) => {
     } else {
       return (
         <>
-          Option 1: (Preferred) Teleport
-          <br />
+          <h1><b>Option 1: (Recommended) Teleport</b></h1>
           <CopyBlock
             text={`tsh login --proxy watonomous.teleport.sh --auth watonomous_github_connector \n tsh ssh <username>@${name}`}
             language="shell"
             theme={atomOneLight}
           />
-          Option 2: SSH (Requires connection to Bastion or Waterloo VPN)
+          <br/>
+          <h1><b>Option 2: SSH (Requires connection to Bastion or Waterloo VPN)</b></h1>
+          <p>If using UWaterloo UWaterloo VPN:</p>
+          <CopyBlock
+            text={`# First make sure the VPN is connected. Then run: \n ssh <username>@${machineName}`}
+            language="shell"
+            theme={atomOneLight}
+          />
+          <p>If using Bastion:</p>
           <CopyBlock
             text={`ssh -J <username>@bastion.watonomous.ca <username>@${machineName}`}
             language="shell"
             theme={atomOneLight}
           />
-          <br />
         </>
       );
     }
@@ -115,7 +121,7 @@ const Check = ({ name, checksData, FQDN, machineName }) => {
             <Modal.Header closeButton>
                 <Modal.Title>VM Access Instructions</Modal.Title>
             </Modal.Header>
-            <Modal.Body>Instructions on how to access: <br />
+            <Modal.Body>Instructions on how to access: <br /> <br />
             {getInstructionBody(name, machineName)}
             </Modal.Body>
             <Modal.Footer>
