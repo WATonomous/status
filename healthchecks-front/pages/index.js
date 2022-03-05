@@ -2,19 +2,51 @@ import Head from "next/head";
 
 import useSWR from "swr";
 import fetcher from "../libs/fetch";
-
+import { useState } from "react";
 import Check from "../components/Check";
-
+import { Button, Modal } from "react-bootstrap";
 import { XIcon } from "@heroicons/react/outline";
 
+const VMAdditionalInfo = {
+    "delta-ubuntu1": {
+    FQDN: "e7-wato-vm2.uwaterloo.ca",
+    machineName: "delta-ubuntu1.watocluster.local",
+    },
+    "thor-ubuntu1": {
+    FQDN: "e7-wato-vm1.uwaterloo.ca",
+    machineName: "thor-ubuntu1.watocluster.local",
+    },
+    "tr-ubuntu1": {
+    FQDN: "e7-wato-vm9.uwaterloo.ca",
+    machineName: "tr-ubuntu1.watocluster.local",
+    },
+    "wato2-ubuntu1": {
+    FQDN: "wato-wato2.uwaterloo.ca",
+    machineName: "wato2-ubuntu1.watocluster.local",
+    },
+    "wato3-ubuntu1": {
+    FQDN: "wato-wato3.uwaterloo.ca",
+    machineName: "wato3-ubuntu1.watocluster.local",
+    },
+    Bastion: {
+    FQDN: "e7-wato-vm0.uwaterloo.ca",
+    },
+    Ceph: {
+    FQDN: "",
+    },
+};
+
 export default function Home() {
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
     const { data: checks, error: errorChecks } = useSWR(
         "/v1/checks/",
         fetcher,
         { refreshInterval: 30000, refreshWhenHidden: true }
     );
 
-    const vmChecks = {}
+    const vmChecks = {};
     let checksTotal = 0;
     let checksError = 0;
 
@@ -23,8 +55,7 @@ export default function Home() {
             checksTotal++;
             check.status == "down" && checksError++;
             const name = check.name.split(" ")[0];
-            check.serviceName = check.name.replace(`${name} `, '').replace(/[()]/g, '');
-            
+            check.serviceName = check.name.replace(`${name} `, "").replace(/[()]/g, "");
             if (!vmChecks[name]) {
                 vmChecks[name] = {
                     items: [check],
@@ -38,17 +69,9 @@ export default function Home() {
     return (
         <div>
             <Head>
-                <title>
-                    {"WATonomous Services"}
-                </title>
-                <meta
-                    name="description"
-                    content="All your healtchecks at a glance"
-                />
-                <meta
-                    property="og:title"
-                    content={"WATonomous Services"}
-                />
+                <title>{"WATonomous Services"}</title>
+                <meta name="description" content="All your healtchecks at a glance" />
+                <meta property="og:title" content={"WATonomous Services"} />
                 <meta property="og:image" content="og_image.png" />
                 <meta
                     property="og:description"
@@ -56,8 +79,7 @@ export default function Home() {
                 />
                 <link
                     rel="icon"
-                    href={`/${checksError ? "favicon-error.ico" : "favicon.ico"
-                        }`}
+                    href={`/${checksError ? "favicon-error.ico" : "favicon.ico"}`}
                 />
                 <meta
                     name="viewport"
@@ -103,29 +125,73 @@ export default function Home() {
                                 } font-bold text-center text-xl`}
                         >
                             {checksError
-                                ? `${checksError} ${checksError == 1 ? "error" : "errors"
-                                }`
+                                ? `${checksError} ${checksError == 1 ? "error" : "errors"}`
                                 : `${checksTotal} ${checksTotal == 1 ? "check" : "checks"
                                 }, all fine 😌`}
                         </h1>
                     </div>
                 )}
+                <div style={{"display": "flex", "justifyContent": "center"}}>
+                    <button className="bg-blue-800 p-2 rounded" onClick={handleShow}>
+                        <p className="text-white">
+                            Prerequisites
+                        </p>
+                    </button>
+                </div>
+                <Modal size="xl" show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>VM Access Instructions</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <p> 
+                            <b> Teleport </b> <br/> 
+                            Please ensure you have filled out the
+                            <a className="text-blue-500" target="_blank" rel="noopener noreferrer" href="https://forms.gle/rhT1Pe9Z43Y5Ri8P8">
+                                {" "} Member Form {" "}
+                            </a>
+                             first. 
+                             <br/> Then, 
+                            <a className="text-blue-500" target="_blank" rel="noopener noreferrer" href="https://goteleport.com/docs/server-access/guides/tsh/">
+                                {" "} follow the following guide to download the CLI tool. {" "}
+                            </a>
+                            <br/>
+                            If you want to set up remote development with VSCode,
+                            <a className="text-blue-500" target="_blank" rel="noopener noreferrer" href="https://goteleport.com/docs/server-access/guides/vscode/">
+                                {" "} please use the following guide
+                            </a> <br/>
+                            <b>Agent Forwarding</b> <br/>
+                            <a className="text-blue-500" target="_blank" rel="noopener noreferrer" href="https://docs.github.com/en/developers/overview/using-ssh-agent-forwarding">
+                                Read the following guide.
+                            </a>
+                        </p>
+                            
+
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Close
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
 
                 {checks && (
                     <div className="grid gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                        {vmChecks && (
+                        {vmChecks &&
                             Object.entries(vmChecks)
                                 .sort((vm1, vm2) => {
-                                    const vmOrder = ['delta-ubuntu1', 'thor-ubuntu1', 'tr-ubuntu1', 'wato2-ubuntu1', 'wato3-ubuntu1', 'Bastion', 'Ceph'];
-                                    return vmOrder.indexOf(vm1[0]) - vmOrder.indexOf(vm2[0])
-                                }))
-                            .map(([vmName, vmChecksData], i) => (
-                                <Check
-                                    key={i}
-                                    name={vmName}
-                                    checksData={vmChecksData.items}
-                                />
-                            ))}
+                                    const vmOrder = ["delta-ubuntu1","thor-ubuntu1", "tr-ubuntu1", "wato2-ubuntu1", "wato3-ubuntu1", "Bastion", "Ceph"];
+                                    return vmOrder.indexOf(vm1[0]) - vmOrder.indexOf(vm2[0]);
+                                })
+                                .map(([vmName, vmChecksData], i) => (
+                                    <Check
+                                        key={i}
+                                        name={vmName}
+                                        checksData={vmChecksData.items}
+                                        FQDN={VMAdditionalInfo[vmName].FQDN}
+                                        machineName={VMAdditionalInfo[vmName].machineName}
+
+                                    />
+                                ))}
                     </div>
                 )}
             </div>
