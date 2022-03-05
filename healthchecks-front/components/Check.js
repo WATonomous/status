@@ -3,67 +3,15 @@ import { XIcon } from "@heroicons/react/outline";
 import { PauseIcon } from "@heroicons/react/outline";
 import { ExclamationCircleIcon } from "@heroicons/react/outline";
 import { ClockIcon } from "@heroicons/react/solid";
-import { Modal, Button } from "react-bootstrap"
-import { CopyBlock, atomOneLight } from "react-code-blocks";
+
 import moment from "moment";
-import { useState } from "react";
 
-const getInstructionBody = (name, machineName) => {
-    if (name === "Bastion") {
-      return (
-        <>
-          <CopyBlock
-            text={`ssh <username>@bastion.watonomous.ca`}
-            language="shell"
-            theme={atomOneLight}
-          />
-        </>
-      );
-    } else {
-      return (
-        <>
-          <h1><b>Option 1: (Recommended) Teleport</b></h1>
-          <CopyBlock
-            text={`tsh login --proxy watonomous.teleport.sh --auth watonomous_github_connector \n tsh ssh <username>@${name}`}
-            language="shell"
-            theme={atomOneLight}
-          />
-          <br/>
-          <h1><b>Option 2: SSH (Requires connection to Bastion or Waterloo VPN)</b></h1>
-          <p>If using UWaterloo UWaterloo VPN:</p>
-          <CopyBlock
-            text={`# First make sure the VPN is connected. Then run: \n ssh <username>@${machineName}`}
-            language="shell"
-            theme={atomOneLight}
-          />
-          <p>If using Bastion:</p>
-          <CopyBlock
-            text={`ssh -J <username>@bastion.watonomous.ca <username>@${machineName}`}
-            language="shell"
-            theme={atomOneLight}
-          />
-        </>
-      );
-    }
-}
-
-const Check = ({ name, checksData, FQDN, machineName }) => {
-    const noInstructions = ["Ceph"]
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+const Check = ({ name, checksData }) => {
     return (
-        <>
         <div
-            className={`${!noInstructions.includes(name) && 'cursor-pointer'} text-white bg-gray-800 rounded-lg p-4 flex flex-col my-6`}
-            onClick={handleShow}
+            className={`text-white bg-gray-800 rounded-lg p-4 flex flex-col my-6`}
         >
             <h1 className="text-2xl text-gray-400 font-semibold mb-1 leading-tight">{name}</h1>
-            {/* keeping FQDN out for now. Might be used in future */}
-            {/* {FQDN &&
-            <h2 className="text-1m text-gray-400 font-semibold mb-1 ">FQDN: {FQDN}</h2>
-            } */}
-            <hr style={{"borderColor": "gray"}}/>
 
             {checksData &&
                 checksData
@@ -115,22 +63,6 @@ const Check = ({ name, checksData, FQDN, machineName }) => {
                     })
             }
         </div>
-        {!noInstructions.includes(name) && 
-        (
-        <Modal size="xl" show={show} onHide={handleClose}>
-            <Modal.Header closeButton>
-                <Modal.Title>VM Access Instructions</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>Instructions on how to access: <br /> <br />
-            {getInstructionBody(name, machineName)}
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                    Close
-                </Button>
-            </Modal.Footer>
-        </Modal>)}
-    </>
     );
 };
 
