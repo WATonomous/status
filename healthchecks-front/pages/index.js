@@ -23,7 +23,7 @@ export default function Home() {
             checksTotal++;
             check.status == "down" && checksError++;
             const name = check.name.split(" ")[0];
-            check.serviceName = check.name.replace(`${name} `, '').replace(/[()]/g, '');
+            check.serviceName = check.name.match(/\(.*\)/)[0].replace(/[()]/g, '');
             
             if (!vmChecks[name]) {
                 vmChecks[name] = {
