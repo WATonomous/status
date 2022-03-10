@@ -144,28 +144,69 @@ export default function Home() {
                     </Modal.Header>
                     <Modal.Body>
                         <p> 
-                            <b> Teleport </b> <br/> 
-                            Please ensure you have filled out the
-                            <a className="text-blue-500" target="_blank" rel="noopener noreferrer" href="https://forms.gle/rhT1Pe9Z43Y5Ri8P8">
-                                {" "} Member Form {" "}
-                            </a>
-                             first. 
-                             <br/> Then, 
-                            <a className="text-blue-500" target="_blank" rel="noopener noreferrer" href="https://goteleport.com/docs/server-access/guides/tsh/">
-                                {" "} follow the following guide to download the CLI tool. {" "}
-                            </a>
+                            <ol>
+                                <li>
+                                    1. Fill out the 
+                                        <a className="text-blue-500" target="_blank" rel="noopener noreferrer" href="https://forms.gle/rhT1Pe9Z43Y5Ri8P8">
+                                        {" "} member form {" "}
+                                        </a> 
+                                    to request access.
+                                </li>
+                                <li>
+                                    2. Have someone approve your request and deploy the changes.
+                                </li>
+                                <li>
+                                    3. Choose one of the following options:
+                                </li>
+                            </ol>
                             <br/>
-                            If you want to set up remote development with VSCode,
-                            <a className="text-blue-500" target="_blank" rel="noopener noreferrer" href="https://goteleport.com/docs/server-access/guides/vscode/">
-                                {" "} please use the following guide.
-                            </a> <br/>
-                            <b>Agent Forwarding</b> <br/>
-                            <a className="text-blue-500" target="_blank" rel="noopener noreferrer" href="https://docs.github.com/en/developers/overview/using-ssh-agent-forwarding">
-                                Read the following guide.
-                            </a>
                         </p>
-                            
 
+                        <p>
+                            <b> Option 1: Teleport </b><br/>
+                            Install
+                            <a className="text-blue-500" target="_blank" rel="noopener noreferrer" href="https://goteleport.com/docs/server-access/guides/tsh/">
+                                {" "} tsh.
+                            </a>
+                            <br/><br/>
+{/* <pre> tag must be outdented like this otherwise the content is tabbed in page */}
+<pre style={{background: "lightgrey", color: "#d63384"}}>
+{`
+    tsh login --proxy watonomous.teleport.sh --auth watonomous_github_connector
+    tsh ls # to view the list of available hosts
+    tsh ssh <username>@<host>
+
+`}
+</pre>
+                            <br/>
+                        </p>
+
+                        <p>
+                            <b> Option 2: Bastion </b><br/>
+                            <br/>
+<pre style={{background: "lightgrey", color: "#d63384"}}>
+{`
+    ssh -i /PATH/TO/PUBLIC/KEY -J <username>@bastion.watonomous.ca <username>@<host>
+
+`}
+</pre>
+                            <br/>
+                            <br/>
+                        </p>
+
+                        <b>Guides</b><br/>
+                        <ul style={{listStyleType: "square", marginLeft: "1em"}}>
+                            <li>
+                                <a className="text-blue-500" target="_blank" rel="noopener noreferrer" href="https://goteleport.com/docs/server-access/guides/vscode/">
+                                    Remote development with VSCode
+                                </a>
+                            </li>
+                            <li>
+                                <a className="text-blue-500" target="_blank" rel="noopener noreferrer" href="https://docs.github.com/en/developers/overview/using-ssh-agent-forwarding">
+                                    Agent forwarding
+                                </a>
+                            </li>
+                        </ul>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={handleClose}>
