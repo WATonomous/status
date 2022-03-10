@@ -16,6 +16,8 @@ const getInstructionBody = (name, machineName) => {
             text={`ssh <username>@bastion.watonomous.ca`}
             language="shell"
             theme={atomOneLight}
+            showLineNumbers={false}
+            codeBlock
           />
         </>
       );
@@ -27,13 +29,17 @@ const getInstructionBody = (name, machineName) => {
             text={`tsh login --proxy watonomous.teleport.sh --auth watonomous_github_connector \ntsh ssh <username>@${name}`}
             language="shell"
             theme={atomOneLight}
+            showLineNumbers={false}
+            codeBlock
           />
           <br/>
           <h1><b>Option 2: Bastion</b></h1>
           <CopyBlock
-            text={`ssh -J <username>@bastion.watonomous.ca <username>@${machineName}`}
+            text={`ssh -i /PATH/TO/PUBLIC/KEY -J <username>@bastion.watonomous.ca <username>@${machineName}`}
             language="shell"
             theme={atomOneLight}
+            showLineNumbers={false}
+            codeBlock
           />
         </>
       );

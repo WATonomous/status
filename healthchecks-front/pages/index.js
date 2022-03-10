@@ -56,7 +56,7 @@ export default function Home() {
             checksTotal++;
             check.status == "down" && checksError++;
             const name = check.name.split(" ")[0];
-            check.serviceName = check.name.match(/\(.*\)/)[0].replace(/[()]/g, "");
+            check.serviceName = check.name.match(/\(.*\)/)[0].replace(/[()]/g, '');
             if (!vmChecks[name]) {
                 vmChecks[name] = {
                     items: [check],
@@ -173,6 +173,8 @@ export default function Home() {
                                 text={`tsh login --proxy watonomous.teleport.sh --auth watonomous_github_connector\ntsh ls # to view the list of available hosts\ntsh ssh <username>@<host>`}
                                 language="shell"
                                 theme={atomOneLight}
+                                showLineNumbers={false}
+                                codeBlock
                             />
                             <br/>
                         </p>
@@ -183,6 +185,8 @@ export default function Home() {
                                 text={`ssh -i /PATH/TO/PUBLIC/KEY -J <username>@bastion.watonomous.ca <username>@<host>`}
                                 language="shell"
                                 theme={atomOneLight}
+                                showLineNumbers={false}
+                                codeBlock
                             />
                             <br/>
                         </p>
@@ -196,7 +200,7 @@ export default function Home() {
                             </li>
                             <li>
                                 <a className="text-blue-500" target="_blank" rel="noopener noreferrer" href="https://docs.github.com/en/developers/overview/using-ssh-agent-forwarding">
-                                    Agent forwarding
+                                    SSH agent forwarding
                                 </a>
                             </li>
                         </ul>
