@@ -4,6 +4,7 @@ import useSWR from "swr";
 import fetcher from "../libs/fetch";
 import { useState } from "react";
 import Check from "../components/Check";
+import { CopyBlock, atomOneLight } from "react-code-blocks";
 import { Button, Modal } from "react-bootstrap";
 import { XIcon } from "@heroicons/react/outline";
 
@@ -55,7 +56,7 @@ export default function Home() {
             checksTotal++;
             check.status == "down" && checksError++;
             const name = check.name.split(" ")[0];
-            check.serviceName = check.name.replace(`${name} `, "").replace(/[()]/g, "");
+            check.serviceName = check.name.match(/\(.*\)/)[0].replace(/[()]/g, "");
             if (!vmChecks[name]) {
                 vmChecks[name] = {
                     items: [check],
@@ -168,29 +169,21 @@ export default function Home() {
                             <a className="text-blue-500" target="_blank" rel="noopener noreferrer" href="https://goteleport.com/docs/server-access/guides/tsh/">
                                 {" "} tsh.
                             </a>
-                            <br/><br/>
-{/* <pre> tag must be outdented like this otherwise the content is tabbed in page */}
-<pre style={{background: "lightgrey", color: "#d63384"}}>
-{`
-    tsh login --proxy watonomous.teleport.sh --auth watonomous_github_connector
-    tsh ls # to view the list of available hosts
-    tsh ssh <username>@<host>
-
-`}
-</pre>
+                            <CopyBlock
+                                text={`tsh login --proxy watonomous.teleport.sh --auth watonomous_github_connector\ntsh ls # to view the list of available hosts\ntsh ssh <username>@<host>`}
+                                language="shell"
+                                theme={atomOneLight}
+                            />
                             <br/>
                         </p>
 
                         <p>
-                            <b> Option 2: Bastion </b><br/>
-                            <br/>
-<pre style={{background: "lightgrey", color: "#d63384"}}>
-{`
-    ssh -i /PATH/TO/PUBLIC/KEY -J <username>@bastion.watonomous.ca <username>@<host>
-
-`}
-</pre>
-                            <br/>
+                            <b> Option 2: Bastion </b>
+                            <CopyBlock
+                                text={`ssh -i /PATH/TO/PUBLIC/KEY -J <username>@bastion.watonomous.ca <username>@<host>`}
+                                language="shell"
+                                theme={atomOneLight}
+                            />
                             <br/>
                         </p>
 

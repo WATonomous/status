@@ -24,19 +24,12 @@ const getInstructionBody = (name, machineName) => {
         <>
           <h1><b>Option 1: (Recommended) Teleport</b></h1>
           <CopyBlock
-            text={`tsh login --proxy watonomous.teleport.sh --auth watonomous_github_connector \n tsh ssh <username>@${name}`}
+            text={`tsh login --proxy watonomous.teleport.sh --auth watonomous_github_connector \ntsh ssh <username>@${name}`}
             language="shell"
             theme={atomOneLight}
           />
           <br/>
-          <h1><b>Option 2: SSH (Requires connection to Bastion or Waterloo VPN)</b></h1>
-          <p>If using UWaterloo UWaterloo VPN:</p>
-          <CopyBlock
-            text={`# First make sure the VPN is connected. Then run: \n ssh <username>@${machineName}`}
-            language="shell"
-            theme={atomOneLight}
-          />
-          <p>If using Bastion:</p>
+          <h1><b>Option 2: Bastion</b></h1>
           <CopyBlock
             text={`ssh -J <username>@bastion.watonomous.ca <username>@${machineName}`}
             language="shell"
