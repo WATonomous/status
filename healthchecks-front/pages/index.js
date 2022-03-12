@@ -135,7 +135,7 @@ export default function Home() {
                 <div style={{"display": "flex", "justifyContent": "center"}}>
                     <button className="bg-blue-800 p-2 rounded" onClick={handleShow}>
                         <p className="text-white">
-                            Prerequisites
+                            Server Access Instructions
                         </p>
                     </button>
                 </div>
