@@ -135,7 +135,7 @@ export default function Home() {
                 <div style={{"display": "flex", "justifyContent": "center"}}>
                     <button className="bg-blue-800 p-2 rounded" onClick={handleShow}>
                         <p className="text-white">
-                            Server Access Instructions
+                            Request Server Access
                         </p>
                     </button>
                 </div>
@@ -182,7 +182,7 @@ export default function Home() {
                         <p>
                             <b> Option 2: Bastion </b>
                             <CopyBlock
-                                text={`ssh -i </path/to/ssh_key.pub> -J <username>@bastion.watonomous.ca <username>@<host>`}
+                                text={`ssh -i </path/to/ssh_key.pub> -J <username>@bastion.watonomous.ca <username>@<host>.watocluster.local`}
                                 language="shell"
                                 theme={atomOneLight}
                                 showLineNumbers={false}

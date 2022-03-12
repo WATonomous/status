@@ -24,7 +24,7 @@ const getInstructionBody = (name, machineName) => {
     } else {
       return (
         <>
-          <h1><b>Option 1: (Recommended) Teleport</b></h1>
+          <h1><b>Option 1: Teleport (Recommended)</b></h1>
           <CopyBlock
             text={`tsh login --proxy watonomous.teleport.sh --auth watonomous_github_connector \ntsh ssh <username>@${name}`}
             language="shell"
@@ -118,9 +118,9 @@ const Check = ({ name, checksData, FQDN, machineName }) => {
         (
         <Modal size="xl" show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-                <Modal.Title>Server Access Instructions</Modal.Title>
+                <Modal.Title>{name}</Modal.Title>
             </Modal.Header>
-            <Modal.Body>Instructions on how to access: <br /> <br />
+            <Modal.Body>Follow the steps below to access {name}: <br /> <br />
             {getInstructionBody(name, machineName)}
             </Modal.Body>
             <Modal.Footer>
