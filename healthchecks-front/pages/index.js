@@ -141,7 +141,7 @@ export default function Home() {
                 </div>
                 <Modal size="xl" show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
-                        <Modal.Title>VM Access Instructions</Modal.Title>
+                        <Modal.Title>Server Access Instructions</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <p> 
