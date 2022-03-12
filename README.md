@@ -17,7 +17,7 @@ To start a development server:
 ```bash
 cd healthchecks-front
 npm ci # install dependencies without updating them
-next dev
+npm run dev
 ```
 
 ### Deployment
