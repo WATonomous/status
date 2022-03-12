@@ -182,7 +182,7 @@ export default function Home() {
                         <p>
                             <b> Option 2: Bastion </b>
                             <CopyBlock
-                                text={`ssh -i /PATH/TO/PUBLIC/KEY -J <username>@bastion.watonomous.ca <username>@<host>`}
+                                text={`ssh -i </path/to/ssh_key.pub> -J <username>@bastion.watonomous.ca <username>@<host>`}
                                 language="shell"
                                 theme={atomOneLight}
                                 showLineNumbers={false}

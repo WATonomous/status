@@ -35,7 +35,7 @@ const getInstructionBody = (name, machineName) => {
           <br/>
           <h1><b>Option 2: Bastion</b></h1>
           <CopyBlock
-            text={`ssh -i /PATH/TO/PUBLIC/KEY -J <username>@bastion.watonomous.ca <username>@${machineName}`}
+            text={`ssh -i </path/to/ssh_key.pub> -J <username>@bastion.watonomous.ca <username>@${machineName}`}
             language="shell"
             theme={atomOneLight}
             showLineNumbers={false}
