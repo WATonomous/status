@@ -8,15 +8,29 @@ Still trying to see what this repo will be about. For now it's a barebones statu
 Both are experimental MVPs and can be replaced without worrying about losing existing work.
 
 
-### Deploying healthchecks-front
+## healthchecks-front
 
-We deploy healthchecks-front by [exporting the Next.js application as static HTML](https://nextjs.org/docs/advanced-features/static-html-export), then hosting it with [GitHub Pages](https://pages.github.com).
+### Development
+
+To start a development server:
 
 ```bash
 cd healthchecks-front
 npm ci # install dependencies without updating them
-./node_modules/.bin/next build
-./node_modules/.bin/next export
+npm run dev
+```
+
+### Deployment
+
+We deploy healthchecks-front by [exporting the Next.js application as static HTML](https://nextjs.org/docs/advanced-features/static-html-export), then hosting it with [GitHub Pages](https://pages.github.com).
+
+The HTML-generation process is currently manual. However, it can be easily automated with [Github Actions](https://github.com/features/actions).
+
+```bash
+cd healthchecks-front
+npm ci # install dependencies without updating them
+npm run build
+npm run export
 cp -r out/* ..
 cd ..
 ```
@@ -29,8 +43,3 @@ python3 -m http.server 8082
 
 Then head to http://localhost:8082 to ensure that the changes are as expected.
 
-
-### Start Server
-```
-npm start
-```
