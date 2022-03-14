@@ -24,7 +24,15 @@ const getInstructionBody = (name, machineName) => {
     } else {
       return (
         <>
-          <h1><b>Option 1: Teleport (Recommended)</b></h1>
+          <h1><b>Option 1: Teleport (Web UI)</b></h1>
+          Log into the
+          <a className="text-blue-500" href="https://watonomous.teleport.sh/">
+              {" "} Teleport Web UI  {" "}
+          </a>
+          using the "GitHub (WATonomous)" option. The interface should be self-explanatory.
+          <br/>
+          <br/>
+          <h1><b>Option 2: Teleport (CLI)</b></h1>
           <CopyBlock
             text={`tsh login --proxy watonomous.teleport.sh --auth watonomous_github_connector \ntsh ssh <username>@${name}`}
             language="shell"
@@ -33,7 +41,7 @@ const getInstructionBody = (name, machineName) => {
             codeBlock
           />
           <br/>
-          <h1><b>Option 2: Bastion</b></h1>
+          <h1><b>Option 3: Bastion</b></h1>
           <CopyBlock
             text={`ssh -i </path/to/ssh_key.pub> -J <username>@bastion.watonomous.ca <username>@${machineName}`}
             language="shell"
