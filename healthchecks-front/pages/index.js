@@ -164,7 +164,18 @@ export default function Home() {
                         </p>
 
                         <p>
-                            <b> Option 1: Teleport </b><br/>
+                            <b> Option 1: Teleport (Web UI)</b><br/>
+                            Log into the
+                            <a className="text-blue-500" href="https://watonomous.teleport.sh/">
+                                {" "} Teleport Web UI  {" "}
+                            </a>
+                            using the &quot;GitHub (WATonomous)&quot; option. The interface should be self-explanatory.
+                            <br/>
+                            <br/>
+                        </p>
+
+                        <p>
+                            <b> Option 2: Teleport (CLI)</b><br/>
                             Install
                             <a className="text-blue-500" href="https://goteleport.com/docs/server-access/guides/tsh/">
                                 {" "} tsh.
@@ -180,7 +191,7 @@ export default function Home() {
                         </p>
 
                         <p>
-                            <b> Option 2: Bastion </b>
+                            <b> Option 3: Bastion </b>
                             <CopyBlock
                                 text={`ssh -i </path/to/ssh_key.pub> -J <username>@bastion.watonomous.ca <username>@<host>.watocluster.local`}
                                 language="shell"
