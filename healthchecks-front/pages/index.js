@@ -169,7 +169,7 @@ export default function Home() {
                             <a className="text-blue-500" href="https://watonomous.teleport.sh/">
                                 {" "} Teleport Web UI  {" "}
                             </a>
-                            using the "GitHub (WATonomous)" option. The interface should be self-explanatory.
+                            using the &quot;GitHub (WATonomous)&quot; option. The interface should be self-explanatory.
                             <br/>
                             <br/>
                         </p>
