@@ -148,7 +148,7 @@ export default function Home() {
                             <ol>
                                 <li>
                                     1. Fill out the 
-                                        <a className="text-blue-500" target="_blank" rel="noopener noreferrer" href="https://forms.gle/rhT1Pe9Z43Y5Ri8P8">
+                                        <a className="text-blue-500" href="https://forms.gle/rhT1Pe9Z43Y5Ri8P8">
                                         {" "} member form {" "}
                                         </a> 
                                     to request access.
@@ -166,7 +166,7 @@ export default function Home() {
                         <p>
                             <b> Option 1: Teleport </b><br/>
                             Install
-                            <a className="text-blue-500" target="_blank" rel="noopener noreferrer" href="https://goteleport.com/docs/server-access/guides/tsh/">
+                            <a className="text-blue-500" href="https://goteleport.com/docs/server-access/guides/tsh/">
                                 {" "} tsh.
                             </a>
                             <CopyBlock
@@ -191,19 +191,9 @@ export default function Home() {
                             <br/>
                         </p>
 
-                        <b>Guides</b><br/>
-                        <ul style={{listStyleType: "square", marginLeft: "1em"}}>
-                            <li>
-                                <a className="text-blue-500" target="_blank" rel="noopener noreferrer" href="https://goteleport.com/docs/server-access/guides/vscode/">
-                                    Remote development with VSCode
-                                </a>
-                            </li>
-                            <li>
-                                <a className="text-blue-500" target="_blank" rel="noopener noreferrer" href="https://docs.github.com/en/developers/overview/using-ssh-agent-forwarding">
-                                    SSH agent forwarding
-                                </a>
-                            </li>
-                        </ul>
+                        <b>Questions?</b><br/>
+                        Find support resources in our <a className="text-blue-500" href="https://github.com/WATonomous/infrastructure-support">infrastructure-support repo</a>!<br/>
+                        Access to this repo is granted as a part of the access request approval process.
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={handleClose}>
