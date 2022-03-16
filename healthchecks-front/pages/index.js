@@ -160,7 +160,13 @@ export default function Home() {
                                     3. For faster approval, please email infra-outreach [at] watonomous.ca.
                                 </li>
                                 <li>
-                                    4. After you accept your GitHub invitation, choose one of the following options:
+                                    4. Accept your GitHub invitation.
+                                </li>
+                                <li>
+                                    5. Read over the <a className="text-blue-500" href="https://github.com/WATonomous/infrastructure-support/blob/main/MANUAL.md">user manual</a>. This is accessible if you have accepted your GitHub invitation.
+                                </li>
+                                <li>
+                                    6. Choose one of the following options:
                                 </li>
                             </ol>
                             <br/>
