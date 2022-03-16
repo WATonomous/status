@@ -151,13 +151,16 @@ export default function Home() {
                                         <a className="text-blue-500" href="https://forms.gle/rhT1Pe9Z43Y5Ri8P8">
                                         {" "} member form {" "}
                                         </a> 
-                                    to request access.
+                                    to request access to the server cluster.
                                 </li>
                                 <li>
-                                    2. Have someone approve your request and deploy the changes.
+                                    2. Your user will be deployed by a WATonomous server cluster member shortly. After your request is approved, you should receive a <a className="text-blue-500" href="https://github.com/orgs/WATonomous/invitation">GitHub invitation</a> for the WATonomous organization in your email.
                                 </li>
                                 <li>
-                                    3. Choose one of the following options:
+                                    3. For faster approval, please email infra-outreach [at] watonomous.ca.
+                                </li>
+                                <li>
+                                    4. After you accept your GitHub invitation, choose one of the following options:
                                 </li>
                             </ol>
                             <br/>
