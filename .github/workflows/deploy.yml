@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - feat/7-project-cleanup
 
   workflow_dispatch:
 
@@ -19,19 +20,16 @@ jobs:
         with:
           node-version: 'lts/*'
           cache: 'npm'
-          cache-dependency-path: ./healthchecks-front/package-lock.json
+          cache-dependency-path: ./package-lock.json
 
       - name: Build
         run: |
-          cd healthchecks-front
-          npm ci 
+          npm ci
           npm run build
           npm run export
-          cp -r out/* ..
-          cd ..
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          publish_dir: ./
+          publish_dir: ./out
