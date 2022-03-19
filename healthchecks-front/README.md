@@ -1,40 +1,45 @@
-Beautiful & free dashboard to use with [Healthchecks.io](https://healthchecks.io). 
-An easy way to see all your checks at a glance in real time, works great on desktop and mobile.
+# WATonomous Status
 
-![Promo](https://raw.githubusercontent.com/nicoandrade/healthchecks-front/main/public/promo.jpg "Promo")
+Still trying to see what this repo will be about. For now it's a barebones status page running on GitHub pages and using the healthchecks.io API. We can probably combine this with what's behind http://vm-status.watonomous.ca.
 
+- `index.html` is adapted from [healthchecks-front](https://github.com/nicoandrade/healthchecks-front). The source code is in `./healthchecks-front`. This only supports one Healthchecks.io project.
+- `all.html` is adapted from [healthchecks/dashboard](https://github.com/healthchecks/dashboard). This supports multiple Healthchecks.io projects, but the UI is not as intuitive as `index.html` at first glance.
 
-## Deploy on Vercel for free
-
-This is a [Next.js](https://nextjs.org) app, so it is recommended to deploy it on [Vercel](https://vercel.com) but you can use any host that supports Next.js.
-All you have to do is click on the **Deploy** button below and then fill the Enviroment Variables with your API key and an optional site's name.
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Fnicoandrade%2Fhealthchecks-front&env=NEXT_PUBLIC_APIKEY,NEXT_PUBLIC_NAME&envDescription=API%20Key%20from%20your%20healthchecks.io%20project&envLink=https%3A%2F%2Fgithub.com%2Fnicoandrade%2Fhealthchecks-front%23where-is-my-api-key&project-name=healthchecks-dashboard&repo-name=healthchecks-dashboard)
+Both are experimental MVPs and can be replaced without worrying about losing existing work.
 
 
-### Where is my API Key?
-Log in on [Healthchecks.io](https://healthchecks.io), go to the project you want to use, click on **Settings** and there you will find the **API Access** section:
+## healthchecks-front
 
-![API Key](https://raw.githubusercontent.com/nicoandrade/healthchecks-front/main/public/apikey.png "API Key")
+### Development
 
-Always use the **read-only** API key.
+To start a development server:
 
+```bash
+cd healthchecks-front
+npm ci # install dependencies without updating them
+npm run dev
+```
 
-### Security
-If you decide to make your dashboard public, your read-only API key will become public as well. Using the read-only API key, anybody can fetch basic information about checks in your project. This includes, for each check:
+### Deployment
 
-* name, tags and description (even though tags and descriptions are currently not being shown on the dashboard)
-* check's schedule (period, grace time, cron expression + timezone)
-* current status (new / up / down / paused)
-* precise time of the last ping
-* precise time of when the next ping is expected
-* total number of pings the check has received
+We deploy healthchecks-front by [exporting the Next.js application as static HTML](https://nextjs.org/docs/advanced-features/static-html-export), then hosting it with [GitHub Pages](https://pages.github.com).
 
-Here are the things that the read-only API keys cannot do:
+The HTML-generation process is currently manual. However, it can be easily automated with [Github Actions](https://github.com/features/actions).
 
-* the ping URLs are not exposed. You are not risking unexpected pings from random visitors
-* no write access: cannot update or delete the existing checks, cannot create new checks in your project
+```bash
+cd healthchecks-front
+npm ci # install dependencies without updating them
+npm run build
+npm run export
+cp -r out/* ..
+cd ..
+```
 
----
+To verify that the static export is working, do this in the root of the project:
 
-Created by [@NicoAndrade](https://nicoandrade.com)
+```bash
+python3 -m http.server 8082
+```
+
+Then head to http://localhost:8082 to ensure that the changes are as expected.
+
