@@ -7,7 +7,6 @@ Still trying to see what this repo will be about. For now it's a barebones statu
 
 Both are experimental MVPs and can be replaced without worrying about losing existing work.
 
-
 ## healthchecks-front
 
 ### Development
@@ -42,4 +41,3 @@ python3 -m http.server 8082
 ```
 
 Then head to http://localhost:8082 to ensure that the changes are as expected.
-
