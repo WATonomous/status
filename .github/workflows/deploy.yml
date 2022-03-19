@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - feat/7-project-cleanup
 
   workflow_dispatch:
 
