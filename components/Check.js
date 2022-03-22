@@ -50,6 +50,7 @@ const getInstructionBody = (name, machineName) => {
         <h1>
           <b>Option 3: Bastion</b>
         </h1>
+        This option requires that you have provided a valid SSH public key in the sign up form.
         <CopyBlock
           text={`ssh -i </path/to/ssh_key.pub> -J <username>@bastion.watonomous.ca <username>@${machineName}`}
           language="shell"
