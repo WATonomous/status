@@ -229,6 +229,7 @@ export default function Home() {
             </p>
             <p>
               <b> Option 3: Bastion </b>
+              <br />
               This option requires that you have provided a valid SSH public key in the sign up form.
               <CopyBlock
                 text={`ssh -i </path/to/ssh_key.pub> -J <username>@bastion.watonomous.ca <username>@<host>.watocluster.local`}
