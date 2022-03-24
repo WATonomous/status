@@ -8,6 +8,8 @@ on:
 
   workflow_dispatch:
 
+concurrency: build_and_deploy_concurrency_group
+
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
