@@ -201,8 +201,10 @@ export default function Home() {
                   >
                     UWaterloo VPN
                   </a>
-                  ). Please contact infra-outreach [at] watonomous.ca if you
-                  don't have a UWaterloo WatIAM account.
+                  ).{' '}
+                  {
+                    "Please contact infra-outreach [at] watonomous.ca if you don't have a UWaterloo WatIAM account."
+                  }
                 </li>
                 <li>7. Choose one of the following options:</li>
               </ol>
