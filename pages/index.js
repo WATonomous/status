@@ -136,6 +136,12 @@ export default function Home() {
             </h1>
           </div>
         )}
+        <div style={{ padding: '1em' }}>
+          <h1 style={{ color: 'red', textAlign: 'center' }}>
+            Notice: As of 2022-03-24, Teleport authentication is disabled and
+            Bastion access is restricted to UWaterloo networks and VPNs.
+          </h1>
+        </div>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <button className="bg-blue-800 p-2 rounded" onClick={handleShow}>
             <p className="text-white">Request Server Access</p>
@@ -187,11 +193,22 @@ export default function Home() {
                   . This is accessible if you have accepted your GitHub
                   invitation.
                 </li>
-                <li>6. Choose one of the following options:</li>
+                <li>
+                  6. Be on the UWaterloo network (e.g. via the{' '}
+                  <a
+                    className="text-blue-500"
+                    href="https://uwaterloo.ca/science-computing/how-tos/campus-vpn-virtual-private-network"
+                  >
+                    UWaterloo VPN
+                  </a>
+                  ). Please contact infra-outreach [at] watonomous.ca if you
+                  don't have a UWaterloo WatIAM account.
+                </li>
+                <li>7. Choose one of the following options:</li>
               </ol>
               <br />
             </p>
-            <p>
+            <p className="disabled">
               <b> Option 1: Teleport (Web UI)</b>
               <br />
               Log into the
@@ -207,7 +224,7 @@ export default function Home() {
               <br />
               <br />
             </p>
-            <p>
+            <p className="disabled">
               <b> Option 2: Teleport (CLI)</b>
               <br />
               Install
@@ -230,7 +247,8 @@ export default function Home() {
             <p>
               <b> Option 3: Bastion </b>
               <br />
-              This option requires that you have provided a valid SSH public key in the sign up form.
+              This option requires that you have provided a valid SSH public key
+              in the sign up form.
               <CopyBlock
                 text={`ssh -i </path/to/ssh_key.pub> -J <username>@bastion.watonomous.ca <username>@<host>.watocluster.local`}
                 language="shell"
