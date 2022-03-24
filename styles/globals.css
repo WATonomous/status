@@ -6,4 +6,9 @@
   body {
     @apply bg-gray-900;
   }
+
+  .disabled {
+    opacity: 0.1;
+    pointer-events: none;
+  }
 }
