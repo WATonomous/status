@@ -18,7 +18,7 @@ jobs:
           echo '${{ toJSON(github.event.pull_request) }}'
 
       - name: Set up mutex
-        uses: ben-z/gh-action-mutex@v1.0-alpha-2
+        uses: ben-z/gh-action-mutex@v1.0-alpha-3
         with:
           branch: mutex-gh-pages
           repo-token: ${{ secrets.GITHUB_TOKEN }}
