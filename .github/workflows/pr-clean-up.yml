@@ -1,4 +1,4 @@
-name: Clean up after PRs are closed or merged
+name: Clean up after closing/merging a PR
 
 on:
   pull_request:
