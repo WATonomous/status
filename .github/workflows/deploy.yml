@@ -55,7 +55,7 @@ jobs:
           path: ./out
 
       - name: Set up mutex
-        uses: ben-z/gh-action-mutex
+        uses: ben-z/gh-action-mutex@v1.0-alpha-1
         with:
           branch: mutex-gh-pages
           repo-token: ${{ secrets.GITHUB_TOKEN }}
@@ -81,7 +81,7 @@ jobs:
           path: ./out
 
       - name: Set up mutex
-        uses: ben-z/gh-action-mutex
+        uses: ben-z/gh-action-mutex@v1.0-alpha-1
         with:
           branch: mutex-gh-pages
           repo-token: ${{ secrets.GITHUB_TOKEN }}
