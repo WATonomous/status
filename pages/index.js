@@ -136,12 +136,6 @@ export default function Home() {
             </h1>
           </div>
         )}
-        <div style={{ padding: '1em' }}>
-          <h1 style={{ color: 'red', textAlign: 'center' }}>
-            Notice: As of 2022-03-24, Teleport authentication is disabled and
-            Bastion access is restricted to UWaterloo networks and VPNs.
-          </h1>
-        </div>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <button className="bg-blue-800 p-2 rounded" onClick={handleShow}>
             <p className="text-white">Request Server Access</p>
@@ -163,7 +157,8 @@ export default function Home() {
                     {' '}
                     member form{' '}
                   </a>
-                  to request access to the server cluster.
+                  to request access to the server cluster. Please make sure to
+                  provide a valid SSH public key in the form.
                 </li>
                 <li>
                   2. Your user will be deployed by a WATonomous server cluster
@@ -181,7 +176,16 @@ export default function Home() {
                   3. For faster approval, please email infra-outreach [at]
                   watonomous.ca.
                 </li>
-                <li>4. Accept your GitHub invitation.</li>
+                <li>
+                  4. Accept your{' '}
+                  <a
+                    className="text-blue-500"
+                    href="https://github.com/orgs/WATonomous/invitation"
+                  >
+                    GitHub invitation
+                  </a>
+                  .
+                </li>
                 <li>
                   5. Read over the{' '}
                   <a
@@ -194,65 +198,15 @@ export default function Home() {
                   invitation.
                 </li>
                 <li>
-                  6. Be on the UWaterloo network (e.g. via the{' '}
-                  <a
-                    className="text-blue-500"
-                    href="https://uwaterloo.ca/science-computing/how-tos/campus-vpn-virtual-private-network"
-                  >
-                    UWaterloo VPN
-                  </a>
-                  ).{' '}
-                  {
-                    "Please contact infra-outreach [at] watonomous.ca if you don't have a UWaterloo WatIAM account."
-                  }
+                  6. SSH into our Bastion server. This is the entrypoint to our
+                  cluster:
                 </li>
-                <li>7. Choose one of the following options:</li>
               </ol>
               <br />
             </p>
-            <p className="disabled">
-              <b> Option 1: Teleport (Web UI)</b>
-              <br />
-              Log into the
-              <a
-                className="text-blue-500"
-                href="https://watonomous.teleport.sh/"
-              >
-                {' '}
-                Teleport Web UI{' '}
-              </a>
-              using the &quot;GitHub (WATonomous)&quot; option. The interface
-              should be self-explanatory.
-              <br />
-              <br />
-            </p>
-            <p className="disabled">
-              <b> Option 2: Teleport (CLI)</b>
-              <br />
-              Install
-              <a
-                className="text-blue-500"
-                href="https://goteleport.com/docs/server-access/guides/tsh/"
-              >
-                {' '}
-                tsh.
-              </a>
-              <CopyBlock
-                text={`tsh login --proxy watonomous.teleport.sh --auth watonomous_github_connector\ntsh ls # to view the list of available hosts\ntsh ssh <username>@<host>`}
-                language="shell"
-                theme={atomOneLight}
-                showLineNumbers={false}
-                codeBlock
-              />
-              <br />
-            </p>
             <p>
-              <b> Option 3: Bastion </b>
-              <br />
-              This option requires that you have provided a valid SSH public key
-              in the sign up form.
               <CopyBlock
-                text={`ssh -i </path/to/ssh_key.pub> -J <username>@bastion.watonomous.ca <username>@<host>.watocluster.local`}
+                text={`ssh -i </path/to/ssh_key> <username>@bastion.watonomous.ca`}
                 language="shell"
                 theme={atomOneLight}
                 showLineNumbers={false}
