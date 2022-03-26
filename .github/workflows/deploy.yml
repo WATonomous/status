@@ -68,6 +68,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build-output
+      - run: ls -R
 
       - name: Deploy to Preview Environment
         uses: JamesIves/github-pages-deploy-action@v4.2.5
