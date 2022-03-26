@@ -60,7 +60,7 @@ jobs:
         with:
           branch: gh-pages
           folder: ./out
-          clean-exclude: ./previews
+          clean-exclude: previews/*
 
   deploy_preview:
     runs-on: ubuntu-latest
