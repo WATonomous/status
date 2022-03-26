@@ -5,6 +5,7 @@ on:
     branches:
       - main
   pull_request:
+    types: [opened, synchronize, reopened, closed]
 
   workflow_dispatch:
 
@@ -29,8 +30,33 @@ jobs:
           npm run export
 
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+        uses: JamesIves/github-pages-deploy-action@v4.2.5
         if: github.ref_name == 'main'
         with:
-          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          publish_dir: ./out
+          branch: gh-pages
+          folder: ./out
+          clean-exclude: ./preview
+
+      - name: Extract PR number
+        shell: bash
+        run: echo "##[set-output name=pr_number;]$(echo \"$GITHUB_REF\" | awk -F / '{print $3}')"
+        id: extract_pr_number
+
+      - name: Deploy to Preview Environment
+        uses: JamesIves/github-pages-deploy-action@v4.2.5
+        if: github.event_name == 'pull_request' && github.event.pull_request.action != 'closed'
+        with:
+          branch: gh-pages
+          folder: ./out
+          target-folder: './preview/${{ steps.extract_pr_number.pr_number }}'
+
+      - if: github.event_name == 'pull_request' && github.event.pull_request.action == 'closed'
+        run: mkdir empty-folder
+
+      - name: Deploy to Preview Environment
+        uses: JamesIves/github-pages-deploy-action@v4.2.5
+        if: github.event_name == 'pull_request' && github.event.pull_request.action == 'closed'
+        with:
+          branch: gh-pages
+          folder: ./empty-folder
+          target-folder: './preview/${{ steps.extract_pr_number.pr_number }}'
