@@ -8,8 +8,6 @@ on:
 
   workflow_dispatch:
 
-concurrency: build_and_deploy_concurrency_group
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -46,6 +44,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.ref_name == 'main'
     needs: [build]
+    concurrency: deploy_prod_concurrency_group
     steps:
       - uses: actions/checkout@v2
 
@@ -54,6 +53,12 @@ jobs:
         with:
           name: build-output
           path: ./out
+
+      - name: Set up mutex
+        uses: ben-z/gh-action-mutex
+        with:
+          branch: mutex-gh-pages
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4.2.5
@@ -74,6 +79,12 @@ jobs:
         with:
           name: build-output
           path: ./out
+
+      - name: Set up mutex
+        uses: ben-z/gh-action-mutex
+        with:
+          branch: mutex-gh-pages
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Deploy to Preview Environment
         uses: JamesIves/github-pages-deploy-action@v4.2.5
