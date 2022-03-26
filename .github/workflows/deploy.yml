@@ -11,10 +11,18 @@ on:
 concurrency: build_and_deploy_concurrency_group
 
 jobs:
-  build_and_deploy:
+  build:
     runs-on: ubuntu-latest
-
     steps:
+      - name: Debug
+        run: |
+          echo "===== github.ref_name"
+          echo '${{ toJSON(github.ref_name) }}'
+          echo "===== github.event_name"
+          echo '${{ toJSON(github.event_name) }}'
+          echo "===== github.event.pull_request"
+          echo '${{ toJSON(github.event.pull_request) }}'
+
       - uses: actions/checkout@v2
 
       - name: Setup Node
@@ -28,9 +36,48 @@ jobs:
           npm ci
           npm run export
 
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        if: github.ref_name == 'main'
+      - name: Upload build output
+        uses: actions/upload-artifact@v3
         with:
-          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          publish_dir: ./out
+          name: build-output
+          path: ./out
+
+  deploy_prod:
+    runs-on: ubuntu-latest
+    if: github.ref_name == 'main'
+    needs: [build]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Download build output
+        uses: actions/download-artifact@v3
+        with:
+          name: build-output
+          path: ./out
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4.2.5
+        with:
+          branch: gh-pages
+          folder: ./out
+          clean-exclude: ./previews
+
+  deploy_preview:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    needs: [build]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Download build output
+        uses: actions/download-artifact@v3
+        with:
+          name: build-output
+          path: ./out
+
+      - name: Deploy to Preview Environment
+        uses: JamesIves/github-pages-deploy-action@v4.2.5
+        with:
+          branch: gh-pages
+          folder: ./out
+          target-folder: './previews/pr-${{ github.event.pull_request.number }}'
