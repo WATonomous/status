@@ -1,0 +1,37 @@
+name: Clean up after PRs are closed or merged
+
+on:
+  pull_request:
+    types: [closed]
+
+concurrency: build_and_deploy_concurrency_group
+
+jobs:
+  delete_preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Debug
+        run: |
+          echo "===== github.ref_name"
+          echo '${{ toJSON(github.ref_name) }}'
+          echo "===== github.event_name"
+          echo '${{ toJSON(github.event_name) }}'
+          echo "===== github.event.pull_request"
+          echo '${{ toJSON(github.event.pull_request) }}'
+
+      - uses: actions/checkout@v3
+        with:
+          ref: gh-pages
+
+      - name: Delete PR Preview
+        run: |
+          rm -r './previews/pr-${{ github.event.pull_request.number }}'
+          git config --local user.name "github-bot"
+          git config --local user.email "github-bot@users.noreply.github.com"
+          git commit -am "Delete preview for PR #${{ github.event.pull_request.number }}"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@a3fd843e49cd58d296bdd2431c4853569a1b900f
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages
