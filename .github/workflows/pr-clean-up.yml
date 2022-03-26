@@ -18,9 +18,15 @@ jobs:
           echo '${{ toJSON(github.event_name) }}'
           echo "===== github.event.pull_request"
           echo '${{ toJSON(github.event.pull_request) }}'
-      - run: mkdir empty-folder
-      - uses: JamesIves/github-pages-deploy-action@v4.2.5
+
+      - uses: actions/checkout@v3
+        with:
+          ref: gh-pages
+
+      - name: Delete PR Preview
+        run: rm -r './previews/pr-${{ github.event.pull_request.number }}'
+
+      - name: Push changes
+        uses: ad-m/github-push-action@a3fd843
         with:
           branch: gh-pages
-          folder: ./empty-folder
-          target-folder: './previews/pr-${{ github.event.pull_request.number }}'
