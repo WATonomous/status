@@ -24,41 +24,9 @@ const getInstructionBody = (name, machineName) => {
   } else {
     return (
       <>
-        <div className="disabled">
-          <h1>
-            <b>Option 1: Teleport (Web UI)</b>
-          </h1>
-          Log into the
-          <a className="text-blue-500" href="https://watonomous.teleport.sh/">
-            {' '}
-            Teleport Web UI{' '}
-          </a>
-          using the &quot;GitHub (WATonomous)&quot; option. The interface should
-          be self-explanatory.
-          <br />
-          <br />
-        </div>
-        <div className="disabled">
-          <h1>
-            <b>Option 2: Teleport (CLI)</b>
-          </h1>
-          <CopyBlock
-            text={`tsh login --proxy watonomous.teleport.sh --auth watonomous_github_connector \ntsh ssh <username>@${name}`}
-            language="shell"
-            theme={atomOneLight}
-            showLineNumbers={false}
-            codeBlock
-          />
-          <br />
-        </div>
         <div>
-          <h1>
-            <b>Option 3: Bastion</b>
-          </h1>
-          This option requires that you have provided a valid SSH public key in
-          the sign up form.
           <CopyBlock
-            text={`ssh -i </path/to/ssh_key.pub> -J <username>@bastion.watonomous.ca <username>@${machineName}`}
+            text={`ssh -i </path/to/ssh_key> -J <username>@bastion.watonomous.ca <username>@${machineName}`}
             language="shell"
             theme={atomOneLight}
             showLineNumbers={false}
@@ -153,7 +121,14 @@ const Check = ({ name, checksData, FQDN, machineName }) => {
             <Modal.Title>{name}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            Follow the steps below to access {name}: <br /> <br />
+            Access {name} by using Bastion as an{' '}
+            <a
+              className="text-blue-500"
+              href="https://www.tecmint.com/access-linux-server-using-a-jump-host/"
+            >
+              SSH jumphost
+            </a>
+            : <br /> <br />
             {getInstructionBody(name, machineName)}
           </Modal.Body>
           <Modal.Footer>
