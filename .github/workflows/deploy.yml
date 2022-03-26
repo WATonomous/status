@@ -51,6 +51,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build-output
+          path: ./out
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4.2.5
@@ -68,6 +69,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build-output
+          path: ./out
       - run: ls -R
 
       - name: Deploy to Preview Environment
