@@ -27,6 +27,6 @@ jobs:
         run: rm -r './previews/pr-${{ github.event.pull_request.number }}'
 
       - name: Push changes
-        uses: ad-m/github-push-action@a3fd843
+        uses: ad-m/github-push-action@a3fd843e49cd58d296bdd2431c4853569a1b900f
         with:
           branch: gh-pages
