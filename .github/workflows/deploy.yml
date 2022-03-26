@@ -5,7 +5,6 @@ on:
     branches:
       - main
   pull_request:
-    types: [opened, synchronize, reopened, closed]
 
   workflow_dispatch:
 
@@ -46,31 +45,10 @@ jobs:
           folder: ./out
           clean-exclude: ./previews
 
-      - name: Extract PR number
-        if: github.event_name == 'pull_request' && github.event.pull_request.action != 'closed'
-        shell: bash
-        run: echo "##[set-output name=pr_number;]$(echo \"$GITHUB_REF\" | awk -F / '{print $3}')"
-        id: extract_pr_number
-
       - name: Deploy to Preview Environment
         uses: JamesIves/github-pages-deploy-action@v4.2.5
-        if: github.event_name == 'pull_request' && github.event.pull_request.action != 'closed'
+        if: github.event_name == 'pull_request'
         with:
           branch: gh-pages
           folder: ./out
-          target-folder: './previews/pr-${{ steps.extract_pr_number.outputs.pr_number }}'
-
-  delete_preview:
-    runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request' && github.event.pull_request.action == 'closed'
-    steps:
-      - name: Extract PR number
-        shell: bash
-        run: echo "##[set-output name=pr_number;]$(echo \"$GITHUB_REF\" | awk -F / '{print $3}')"
-        id: extract_pr_number
-      - run: mkdir empty-folder
-      - uses: JamesIves/github-pages-deploy-action@v4.2.5
-        with:
-          branch: gh-pages
-          folder: ./empty-folder
-          target-folder: './previews/pr-${{ steps.extract_pr_number.outputs.pr_number }}'
+          target-folder: './previews/pr-${{ github.event.pull_request.number }}'
