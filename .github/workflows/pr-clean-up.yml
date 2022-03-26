@@ -24,7 +24,11 @@ jobs:
           ref: gh-pages
 
       - name: Delete PR Preview
-        run: rm -r './previews/pr-${{ github.event.pull_request.number }}'
+        run: |
+          rm -r './previews/pr-${{ github.event.pull_request.number }}'
+          git config --local user.name "github-bot"
+          git config --local user.email "github-bot@users.noreply.github.com"
+          git commit -am "Delete preview for PR #${{ github.event.pull_request.number }}"
 
       - name: Push changes
         uses: ad-m/github-push-action@a3fd843e49cd58d296bdd2431c4853569a1b900f
