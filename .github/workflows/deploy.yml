@@ -47,6 +47,8 @@ jobs:
     if: github.ref_name == 'main'
     needs: [build]
     steps:
+      - uses: actions/checkout@v2
+
       - name: Download build output
         uses: actions/download-artifact@v3
         with:
@@ -65,12 +67,13 @@ jobs:
     if: github.event_name == 'pull_request'
     needs: [build]
     steps:
+      - uses: actions/checkout@v2
+
       - name: Download build output
         uses: actions/download-artifact@v3
         with:
           name: build-output
           path: ./out
-      - run: ls -R
 
       - name: Deploy to Preview Environment
         uses: JamesIves/github-pages-deploy-action@v4.2.5
