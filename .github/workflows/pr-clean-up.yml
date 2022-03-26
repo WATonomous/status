@@ -10,6 +10,14 @@ jobs:
   delete_preview:
     runs-on: ubuntu-latest
     steps:
+      - name: Debug
+        run: |
+          echo "===== github.ref_name"
+          echo '${{ toJSON(github.ref_name) }}'
+          echo "===== github.event_name"
+          echo '${{ toJSON(github.event_name) }}'
+          echo "===== github.event.pull_request"
+          echo '${{ toJSON(github.event.pull_request) }}'
       - run: mkdir empty-folder
       - uses: JamesIves/github-pages-deploy-action@v4.2.5
         with:
