@@ -1,10 +1,8 @@
-name: Clean up after PRs are closed or merged
+name: Clean up after closing/merging a PR
 
 on:
   pull_request:
     types: [closed]
-
-concurrency: build_and_deploy_concurrency_group
 
 jobs:
   delete_preview:
@@ -18,6 +16,12 @@ jobs:
           echo '${{ toJSON(github.event_name) }}'
           echo "===== github.event.pull_request"
           echo '${{ toJSON(github.event.pull_request) }}'
+
+      - name: Set up mutex
+        uses: ben-z/gh-action-mutex@v1.0-alpha-3
+        with:
+          branch: mutex-gh-pages
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/checkout@v3
         with:
