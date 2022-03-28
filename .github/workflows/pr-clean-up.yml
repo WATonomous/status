@@ -8,15 +8,6 @@ jobs:
   delete_preview:
     runs-on: ubuntu-latest
     steps:
-      - name: Debug
-        run: |
-          echo "===== github.ref_name"
-          echo '${{ toJSON(github.ref_name) }}'
-          echo "===== github.event_name"
-          echo '${{ toJSON(github.event_name) }}'
-          echo "===== github.event.pull_request"
-          echo '${{ toJSON(github.event.pull_request) }}'
-
       - name: Set up mutex
         uses: ben-z/gh-action-mutex@v1.0-alpha-3
         with:
