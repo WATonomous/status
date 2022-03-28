@@ -67,6 +67,7 @@ jobs:
     # This is okay in this job because we don't execute any external code (e.g. npm export).
     permissions:
       contents: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@v2
 
