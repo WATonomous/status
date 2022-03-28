@@ -87,8 +87,25 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Deploy to Preview Environment
+        id: deploy
         uses: JamesIves/github-pages-deploy-action@v4.2.5
         with:
           branch: gh-pages
           folder: ./out
           target-folder: './previews/pr-${{ github.event.pull_request.number }}/${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}'
+
+      - name: Debug
+        run: |
+          echo "===== steps.deploy"
+          echo '${{ toJSON(steps.deploy) }}'
+
+      - name: Create comment
+        uses: peter-evans/create-or-update-comment@v2
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            I'm deploying a preview of [${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}][compare].
+            It will be ready in about a minute. [You can view it here][preview].
+
+            [compare]: ${{ github.event.pull_request.head.html_url }}/compare/${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}
+            [preview]: ${{ github.event.pull_request.head.homepage }}/previews/pr-${{ github.event.pull_request.number }}/${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}
