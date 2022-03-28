@@ -12,15 +12,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Debug
-        run: |
-          echo "===== github.ref_name"
-          echo '${{ toJSON(github.ref_name) }}'
-          echo "===== github.event_name"
-          echo '${{ toJSON(github.event_name) }}'
-          echo "===== github.event.pull_request"
-          echo '${{ toJSON(github.event.pull_request) }}'
-
       - uses: actions/checkout@v2
 
       - name: Set up Node
@@ -91,4 +82,15 @@ jobs:
         with:
           branch: gh-pages
           folder: ./out
-          target-folder: './previews/pr-${{ github.event.pull_request.number }}'
+          target-folder: './previews/pr-${{ github.event.pull_request.number }}/${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}'
+
+      - name: Create comment
+        uses: peter-evans/create-or-update-comment@v2
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            I'm deploying a preview of [${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}][compare].
+            It will be ready in about a minute. [You can view it here][preview].
+
+            [compare]: ${{ github.event.pull_request.head.repo.html_url }}/compare/${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}
+            [preview]: ${{ github.event.pull_request.head.repo.homepage }}/previews/pr-${{ github.event.pull_request.number }}/${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}
