@@ -12,15 +12,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Debug
-        run: |
-          echo "===== github.ref_name"
-          echo '${{ toJSON(github.ref_name) }}'
-          echo "===== github.event_name"
-          echo '${{ toJSON(github.event_name) }}'
-          echo "===== github.event.pull_request"
-          echo '${{ toJSON(github.event.pull_request) }}'
-
       - uses: actions/checkout@v2
 
       - name: Set up Node
@@ -87,23 +78,11 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Deploy to Preview Environment
-        id: deploy
         uses: JamesIves/github-pages-deploy-action@v4.2.5
         with:
           branch: gh-pages
           folder: ./out
           target-folder: './previews/pr-${{ github.event.pull_request.number }}/${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}'
-
-      - name: Debug
-        run: |
-          echo "===== steps.deploy"
-          echo '${{ toJSON(steps.deploy) }}'
-          echo "===== github.ref_name"
-          echo '${{ toJSON(github.ref_name) }}'
-          echo "===== github.event_name"
-          echo '${{ toJSON(github.event_name) }}'
-          echo "===== github.event.pull_request"
-          echo '${{ toJSON(github.event.pull_request) }}'
 
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v2
