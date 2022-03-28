@@ -62,6 +62,10 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
     needs: [build]
+    # Specify write permissions explicitly to make dependabot PRs happy:
+    # https://github.com/dependabot/dependabot-core/issues/3253#issuecomment-940182533
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v2
 
@@ -73,10 +77,6 @@ jobs:
 
       - name: Set up mutex
         uses: ben-z/gh-action-mutex@v1.0-alpha-3
-        # Specify write permissions explicitly to make dependabot PRs happy:
-        # https://github.com/dependabot/dependabot-core/issues/3253#issuecomment-940182533
-        permissions:
-          contents: write
         with:
           branch: mutex-gh-pages
           repo-token: ${{ secrets.GITHUB_TOKEN }}
