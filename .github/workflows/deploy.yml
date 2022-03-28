@@ -98,6 +98,12 @@ jobs:
         run: |
           echo "===== steps.deploy"
           echo '${{ toJSON(steps.deploy) }}'
+          echo "===== github.ref_name"
+          echo '${{ toJSON(github.ref_name) }}'
+          echo "===== github.event_name"
+          echo '${{ toJSON(github.event_name) }}'
+          echo "===== github.event.pull_request"
+          echo '${{ toJSON(github.event.pull_request) }}'
 
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v2
