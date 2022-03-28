@@ -64,6 +64,7 @@ jobs:
     needs: [build]
     # Specify write permissions explicitly to make dependabot PRs happy:
     # https://github.com/dependabot/dependabot-core/issues/3253#issuecomment-940182533
+    # This is okay in this job because we don't execute any external code (e.g. npm export).
     permissions:
       contents: write
     steps:
