@@ -162,7 +162,7 @@ export default function Home() {
             <Modal.Title>Server Access Instructions</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <ReactMarkdown children={serverInstructions} />
+            <ReactMarkdown>{serverInstructions}</ReactMarkdown>
             <p>
               <CopyBlock
                 text={`ssh -i </path/to/ssh_key> <username>@bastion.watonomous.ca`}
@@ -173,7 +173,7 @@ export default function Home() {
               />
               <br />
             </p>
-            <ReactMarkdown children={serverInstructionsQuestions} />
+            <ReactMarkdown>{serverInstructionsQuestions}</ReactMarkdown>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
