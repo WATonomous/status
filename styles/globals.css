@@ -11,4 +11,15 @@
     opacity: 0.1;
     pointer-events: none;
   }
+
+  a {
+    @apply text-blue-500;
+  }
+
+  .modal-content ol {
+    list-style: auto;
+    margin: revert;
+    padding: revert;
+    padding-left: 1rem;
+  }
 }
