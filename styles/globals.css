@@ -16,10 +16,7 @@
     @apply text-blue-500;
   }
 
-  .modal-content ol {
-    list-style: auto;
-    margin: revert;
-    padding: revert;
-    padding-left: 1rem;
+  ol {
+    @apply list-decimal list-inside mb-4;
   }
 }
