@@ -79,7 +79,7 @@ export default function Home() {
   ~~~
 
   **Questions?** \\
-  Find support resources in our infrastructure-support repo! \\
+  Find support resources in our [infrastructure-support repo](https://github.com/WATonomous/infrastructure-support)! \\
   Access to this repo is granted as a part of the access request approval process.
   `;
 
