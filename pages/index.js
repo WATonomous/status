@@ -4,7 +4,6 @@ import useSWR from 'swr';
 import fetcher from '../libs/fetch';
 import { useState } from 'react';
 import Check from '../components/Check';
-import { CopyBlock, atomOneLight } from 'react-code-blocks';
 import { Button, Modal } from 'react-bootstrap';
 import { XIcon } from '@heroicons/react/outline';
 import ReactMarkdown from 'react-markdown';
@@ -74,9 +73,11 @@ export default function Home() {
   4. Accept your [GitHub invitation](https://github.com/orgs/WATonomous/invitation).
   5. Read over the [user manual](https://github.com/WATonomous/infrastructure-support/blob/main/MANUAL.md). This is accessible if you have accepted your GitHub invitation.
   6. SSH into our Bastion server. This is the entrypoint to our cluster:
-  `;
 
-  const serverInstructionsQuestions = `
+  ~~~shell
+  ssh -i </path/to/ssh_key> <username>@bastion.watonomous.ca
+  ~~~
+
   **Questions?** \\
   Find support resources in our infrastructure-support repo! \\
   Access to this repo is granted as a part of the access request approval process.
@@ -163,17 +164,6 @@ export default function Home() {
           </Modal.Header>
           <Modal.Body>
             <ReactMarkdown>{serverInstructions}</ReactMarkdown>
-            <p>
-              <CopyBlock
-                text={`ssh -i </path/to/ssh_key> <username>@bastion.watonomous.ca`}
-                language="shell"
-                theme={atomOneLight}
-                showLineNumbers={false}
-                codeBlock
-              />
-              <br />
-            </p>
-            <ReactMarkdown>{serverInstructionsQuestions}</ReactMarkdown>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>

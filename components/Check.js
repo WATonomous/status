@@ -4,38 +4,22 @@ import { PauseIcon } from '@heroicons/react/outline';
 import { ExclamationCircleIcon } from '@heroicons/react/outline';
 import { ClockIcon } from '@heroicons/react/solid';
 import { Modal, Button } from 'react-bootstrap';
-import { CopyBlock, atomOneLight } from 'react-code-blocks';
 import moment from 'moment';
 import { useState } from 'react';
+import ReactMarkdown from 'react-markdown';
 
 const getInstructionBody = (name, machineName) => {
-  if (name === 'Bastion') {
-    return (
-      <>
-        <CopyBlock
-          text={`ssh <username>@bastion.watonomous.ca`}
-          language="shell"
-          theme={atomOneLight}
-          showLineNumbers={false}
-          codeBlock
-        />
-      </>
-    );
-  } else {
-    return (
-      <>
-        <div>
-          <CopyBlock
-            text={`ssh -i </path/to/ssh_key> -J <username>@bastion.watonomous.ca <username>@${machineName}`}
-            language="shell"
-            theme={atomOneLight}
-            showLineNumbers={false}
-            codeBlock
-          />
-        </div>
-      </>
-    );
-  }
+  const sshInstructions =
+    name === 'Bastion'
+      ? `ssh <username>@bastion.watonomous.ca`
+      : `ssh -i </path/to/ssh_key> -J <username>@bastion.watonomous.ca <username>@${machineName}`;
+  const instructionBody = `
+  Access ${name} by using Bastion as an [SSH jumphost](https://www.tecmint.com/access-linux-server-using-a-jump-host/):
+  ~~~shell
+  ${sshInstructions}
+  ~~~
+  `;
+  return instructionBody;
 };
 
 const Check = ({ name, checksData, FQDN, machineName }) => {
@@ -121,15 +105,9 @@ const Check = ({ name, checksData, FQDN, machineName }) => {
             <Modal.Title>{name}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            Access {name} by using Bastion as an{' '}
-            <a
-              className="text-blue-500"
-              href="https://www.tecmint.com/access-linux-server-using-a-jump-host/"
-            >
-              SSH jumphost
-            </a>
-            : <br /> <br />
-            {getInstructionBody(name, machineName)}
+            <ReactMarkdown>
+              {getInstructionBody(name, machineName)}
+            </ReactMarkdown>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
