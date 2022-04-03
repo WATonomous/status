@@ -15,7 +15,11 @@ const getInstructionBody = (name, machineName) => {
       ? `ssh <username>@bastion.watonomous.ca`
       : `ssh -i </path/to/ssh_key> -J <username>@bastion.watonomous.ca <username>@${machineName}`;
   const instructionBody = `
-  Access ${name} by using Bastion as an [SSH jumphost](https://www.tecmint.com/access-linux-server-using-a-jump-host/):
+  Access ${name}${
+    name !== 'Bastion'
+      ? ' by using Bastion as an [SSH jumphost](https://www.tecmint.com/access-linux-server-using-a-jump-host/)'
+      : ''
+  }:
   ~~~shell
   ${sshInstructions}
   ~~~
