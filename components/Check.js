@@ -7,6 +7,7 @@ import { Modal, Button } from 'react-bootstrap';
 import moment from 'moment';
 import { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
+import CodeBlock from '../components/CodeBlock';
 
 const getInstructionBody = (name, machineName) => {
   const sshInstructions =
@@ -105,7 +106,7 @@ const Check = ({ name, checksData, FQDN, machineName }) => {
             <Modal.Title>{name}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <ReactMarkdown>
+            <ReactMarkdown components={CodeBlock}>
               {getInstructionBody(name, machineName)}
             </ReactMarkdown>
           </Modal.Body>

@@ -7,6 +7,7 @@ import Check from '../components/Check';
 import { Button, Modal } from 'react-bootstrap';
 import { XIcon } from '@heroicons/react/outline';
 import ReactMarkdown from 'react-markdown';
+import CodeBlock from '../components/CodeBlock';
 
 const VMAdditionalInfo = {
   'delta-ubuntu1': {
@@ -163,7 +164,9 @@ export default function Home() {
             <Modal.Title>Server Access Instructions</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <ReactMarkdown>{serverInstructions}</ReactMarkdown>
+            <ReactMarkdown components={CodeBlock}>
+              {serverInstructions}
+            </ReactMarkdown>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>

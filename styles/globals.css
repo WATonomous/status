@@ -21,6 +21,6 @@
   }
 
   pre {
-    @apply bg-gray-50 rounded p-4 my-4;
+    @apply rounded;
   }
 }
