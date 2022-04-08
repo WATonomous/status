@@ -152,10 +152,10 @@ export default function Home() {
                   1. Fill out the
                   <a
                     className="text-blue-500"
-                    href="https://forms.gle/rhT1Pe9Z43Y5Ri8P8"
+                    href="https://watonomous.github.io/infra-config/onboarding-form"
                   >
                     {' '}
-                    member form{' '}
+                    onboarding form{' '}
                   </a>
                   to request access to the server cluster. Please make sure to
                   provide a valid SSH public key in the form.
