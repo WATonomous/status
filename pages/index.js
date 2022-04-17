@@ -68,7 +68,7 @@ export default function Home() {
   }
 
   const serverInstructions = `
-  1. Fill out the [member form](https://forms.gle/rhT1Pe9Z43Y5Ri8P8) to request access to the server cluster. Please make sure to provide a valid SSH public key in the form.
+  1. Fill out the [onboarding form](https://watonomous.github.io/infra-config/onboarding-form) to request access to the server cluster. Please make sure to provide a valid SSH public key in the form.
   2. Your user will be deployed by a WATonomous server cluster member shortly. After your request is approved, you should receive a [GitHub invitation](https://github.com/orgs/WATonomous/invitation) for the WATonomous organization in your email.
   3. For faster approval, please email [infra-outreach@watonomous.ca](mailto:infra-outreach@watonomous.ca).
   4. Accept your [GitHub invitation](https://github.com/orgs/WATonomous/invitation).
