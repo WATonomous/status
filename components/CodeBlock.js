@@ -23,7 +23,7 @@ function CodeBlock({ node, inline, className, children, ...props }) {
     <div className="relative">
       {codeBlock}
       <button
-        className="absolute top-1 right-1 p-2 bg-gray-100 rounded"
+        className="absolute top-2.5 right-1 p-2 bg-gray-100 rounded"
         onClick={() => {
           navigator.clipboard.writeText(code);
           setCopied(true);
