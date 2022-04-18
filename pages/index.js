@@ -164,7 +164,7 @@ export default function Home() {
             <Modal.Title>Server Access Instructions</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <ReactMarkdown components={CodeBlock}>
+            <ReactMarkdown components={{ code: CodeBlock }}>
               {serverInstructions}
             </ReactMarkdown>
           </Modal.Body>

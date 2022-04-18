@@ -110,7 +110,7 @@ const Check = ({ name, checksData, FQDN, machineName }) => {
             <Modal.Title>{name}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <ReactMarkdown components={CodeBlock}>
+            <ReactMarkdown components={{ code: CodeBlock }}>
               {getInstructionBody(name, machineName)}
             </ReactMarkdown>
           </Modal.Body>
