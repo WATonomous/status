@@ -11,4 +11,16 @@
     opacity: 0.1;
     pointer-events: none;
   }
+
+  a {
+    @apply text-blue-500;
+  }
+
+  ol {
+    @apply list-decimal list-inside;
+  }
+
+  pre {
+    @apply rounded;
+  }
 }

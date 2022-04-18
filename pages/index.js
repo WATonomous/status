@@ -4,9 +4,10 @@ import useSWR from 'swr';
 import fetcher from '../libs/fetch';
 import { useState } from 'react';
 import Check from '../components/Check';
-import { CopyBlock, atomOneLight } from 'react-code-blocks';
 import { Button, Modal } from 'react-bootstrap';
 import { XIcon } from '@heroicons/react/outline';
+import ReactMarkdown from 'react-markdown';
+import CodeBlock from '../components/CodeBlock';
 
 const VMAdditionalInfo = {
   'delta-ubuntu1': {
@@ -65,6 +66,23 @@ export default function Home() {
       }
     });
   }
+
+  const serverInstructions = `
+  1. Fill out the [onboarding form](https://watonomous.github.io/infra-config/onboarding-form) to request access to the server cluster. Please make sure to provide a valid SSH public key in the form.
+  2. Your user will be deployed by a WATonomous server cluster member shortly. After your request is approved, you should receive a [GitHub invitation](https://github.com/orgs/WATonomous/invitation) for the WATonomous organization in your email.
+  3. For faster approval, please email [infra-outreach@watonomous.ca](mailto:infra-outreach@watonomous.ca).
+  4. Accept your [GitHub invitation](https://github.com/orgs/WATonomous/invitation).
+  5. Read over the [user manual](https://github.com/WATonomous/infrastructure-support/blob/main/MANUAL.md). This is accessible if you have accepted your GitHub invitation.
+  6. SSH into our Bastion server. This is the entrypoint to our cluster:
+
+  ~~~shell
+  ssh -i </path/to/ssh_key> <username>@bastion.watonomous.ca
+  ~~~
+
+  **Questions?** \\
+  Find support resources in our [infrastructure-support repo](https://github.com/WATonomous/infrastructure-support)! \\
+  Access to this repo is granted as a part of the access request approval process.
+  `;
 
   return (
     <div>
@@ -146,86 +164,9 @@ export default function Home() {
             <Modal.Title>Server Access Instructions</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <p>
-              <ol>
-                <li>
-                  1. Fill out the
-                  <a
-                    className="text-blue-500"
-                    href="https://watonomous.github.io/infra-config/onboarding-form"
-                  >
-                    {' '}
-                    onboarding form{' '}
-                  </a>
-                  to request access to the server cluster. Please make sure to
-                  provide a valid SSH public key in the form.
-                </li>
-                <li>
-                  2. Your user will be deployed by a WATonomous server cluster
-                  member shortly. After your request is approved, you should
-                  receive a{' '}
-                  <a
-                    className="text-blue-500"
-                    href="https://github.com/orgs/WATonomous/invitation"
-                  >
-                    GitHub invitation
-                  </a>{' '}
-                  for the WATonomous organization in your email.
-                </li>
-                <li>
-                  3. For faster approval, please email infra-outreach [at]
-                  watonomous.ca.
-                </li>
-                <li>
-                  4. Accept your{' '}
-                  <a
-                    className="text-blue-500"
-                    href="https://github.com/orgs/WATonomous/invitation"
-                  >
-                    GitHub invitation
-                  </a>
-                  .
-                </li>
-                <li>
-                  5. Read over the{' '}
-                  <a
-                    className="text-blue-500"
-                    href="https://github.com/WATonomous/infrastructure-support/blob/main/MANUAL.md"
-                  >
-                    user manual
-                  </a>
-                  . This is accessible if you have accepted your GitHub
-                  invitation.
-                </li>
-                <li>
-                  6. SSH into our Bastion server. This is the entrypoint to our
-                  cluster:
-                </li>
-              </ol>
-              <br />
-            </p>
-            <p>
-              <CopyBlock
-                text={`ssh -i </path/to/ssh_key> <username>@bastion.watonomous.ca`}
-                language="shell"
-                theme={atomOneLight}
-                showLineNumbers={false}
-                codeBlock
-              />
-              <br />
-            </p>
-            <b>Questions?</b>
-            <br />
-            Find support resources in our{' '}
-            <a
-              className="text-blue-500"
-              href="https://github.com/WATonomous/infrastructure-support"
-            >
-              infrastructure-support repo
-            </a>
-            !<br />
-            Access to this repo is granted as a part of the access request
-            approval process.
+            <ReactMarkdown components={{ code: CodeBlock }}>
+              {serverInstructions}
+            </ReactMarkdown>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
