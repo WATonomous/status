@@ -30,6 +30,10 @@ const VMAdditionalInfo = {
     FQDN: 'wato-wato3.uwaterloo.ca',
     machineName: 'wato3-ubuntu1.watocluster.local',
   },
+  'trpro-ubuntu1': {
+    FQDN: 'trpro-ubuntu1.watocluster.local',
+    machineName: 'trpro-ubuntu1.watocluster.local',
+  },
   Bastion: {
     FQDN: 'e7-wato-vm0.uwaterloo.ca',
   },
@@ -196,8 +200,8 @@ export default function Home() {
                     key={i}
                     name={vmName}
                     checksData={vmChecksData.items}
-                    FQDN={VMAdditionalInfo[vmName].FQDN}
-                    machineName={VMAdditionalInfo[vmName].machineName}
+                    FQDN={VMAdditionalInfo[vmName]?.FQDN}
+                    machineName={VMAdditionalInfo[vmName]?.machineName}
                   />
                 ))}
           </div>
