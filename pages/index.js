@@ -83,10 +83,10 @@ export default function Home() {
   ssh -i </path/to/ssh_key> <username>@bastion.watonomous.ca
   ~~~
 
-  **Need tech support?** \\
+  ### Tech support
   Find support resources in our [infrastructure-support repo](https://github.com/WATonomous/infrastructure-support)! Access to this repo is granted as a part of the access request approval process.
   
-  **Collaboration** \\
+  ### Collaboration
   If you are a student design team/project lead and would like WATcloud access for you and your team. Please reach out to [infra-outreach@watonomous.ca](mailto:infra-outreach@watonomous.ca).
   `;
 
