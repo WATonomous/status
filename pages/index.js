@@ -76,7 +76,7 @@ export default function Home() {
   1. Have your WATcloud point-of-contact (e.g. your manager, tech lead, student design team lead, or designated infrastructure support member) approve your request and trigger the provisioning script.
   1. After your request is approved, you should receive a [GitHub invitation](https://github.com/orgs/WATonomous/invitation) for the WATonomous organization in your email.
   1. Accept your [GitHub invitation](https://github.com/orgs/WATonomous/invitation).
-  1. Read over the [user manual](https://github.com/WATonomous/infrastructure-support/blob/main/MANUAL.md). This is accessible if you have accepted your GitHub invitation.
+  1. Read over the [user manual](https://github.com/WATonomous/infrastructure-support/blob/main/MANUAL.md). This is accessible after you have accepted your GitHub invitation.
   1. SSH into our Bastion server. This is the entrypoint to our cluster:
 
   ~~~shell
