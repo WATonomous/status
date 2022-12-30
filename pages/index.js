@@ -73,19 +73,22 @@ export default function Home() {
 
   const serverInstructions = `
   1. Fill out the [onboarding form](https://watonomous.github.io/infra-config/onboarding-form) to request access to the server cluster. Please make sure to provide a valid SSH public key in the form.
-  2. Your user will be deployed by a WATonomous server cluster member shortly. After your request is approved, you should receive a [GitHub invitation](https://github.com/orgs/WATonomous/invitation) for the WATonomous organization in your email.
-  3. For faster approval, please email [infra-outreach@watonomous.ca](mailto:infra-outreach@watonomous.ca).
-  4. Accept your [GitHub invitation](https://github.com/orgs/WATonomous/invitation).
-  5. Read over the [user manual](https://github.com/WATonomous/infrastructure-support/blob/main/MANUAL.md). This is accessible if you have accepted your GitHub invitation.
-  6. SSH into our Bastion server. This is the entrypoint to our cluster:
+  1. Have your WATcloud point-of-contact (e.g. your manager, tech lead, student design team lead, or designated infrastructure support member) approve your request and trigger the provisioning script.
+  1. After your request is approved, you should receive a [GitHub invitation](https://github.com/orgs/WATonomous/invitation) for the WATonomous organization in your email.
+  1. Accept your [GitHub invitation](https://github.com/orgs/WATonomous/invitation).
+  1. Read over the [user manual](https://github.com/WATonomous/infrastructure-support/blob/main/MANUAL.md). This is accessible if you have accepted your GitHub invitation.
+  1. SSH into our Bastion server. This is the entrypoint to our cluster:
 
   ~~~shell
   ssh -i </path/to/ssh_key> <username>@bastion.watonomous.ca
   ~~~
 
-  **Questions?** \\
+  **Need tech support?** \\
   Find support resources in our [infrastructure-support repo](https://github.com/WATonomous/infrastructure-support)! \\
   Access to this repo is granted as a part of the access request approval process.
+  
+  **Collaboration**
+  If you are a student design team/project lead and would like WATcloud access for you and your team. Please reach out to [infra-outreach@watonomous.ca](mailto:infra-outreach@watonomous.ca).
   `;
 
   return (
@@ -165,7 +168,7 @@ export default function Home() {
         </div>
         <Modal size="xl" show={show} onHide={handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Server Access Instructions</Modal.Title>
+            <Modal.Title>WATcloud Server Access Instructions</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <ReactMarkdown components={{ code: CodeBlock }}>
