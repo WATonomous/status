@@ -11,7 +11,10 @@ function CodeBlock({ node, inline, className, children, ...props }) {
   const codeBlock =
     !inline && match ? (
       <SyntaxHighlighter style={prism} language={match[1]} {...props}>
-        {code}
+        {
+          // small padding for the copy button
+          code + '   '
+        }
       </SyntaxHighlighter>
     ) : (
       <code className={className} {...props}>
