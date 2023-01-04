@@ -80,7 +80,7 @@ export default function Home() {
   1. SSH into our Bastion server. This is the entrypoint to our cluster:
 
   ~~~shell
-  ssh -i </path/to/ssh_key> <username>@bastion.watonomous.ca
+  ssh -i <path_to_priv_key> <username>@bastion.watonomous.ca
   ~~~
 
   \\
