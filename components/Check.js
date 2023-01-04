@@ -12,8 +12,8 @@ import CodeBlock from '../components/CodeBlock';
 const getInstructionBody = (name, machineName) => {
   const sshInstructions =
     name === 'Bastion'
-      ? `ssh <username>@bastion.watonomous.ca`
-      : `ssh -i </path/to/ssh_key> -J <username>@bastion.watonomous.ca <username>@${machineName}`;
+      ? `ssh -v <username>@bastion.watonomous.ca`
+      : `SSH_PRIV_KEY_PATH=<path_to_priv_key>; SSH_USERNAME=<username>; ssh -v -o ProxyCommand="ssh -W %h:%p -i $SSH_PRIV_KEY_PATH $SSH_USERNAME@bastion.watonomous.ca" -i $SSH_PRIV_KEY_PATH $SSH_USERNAME@${machineName}`;
   const instructionBody = `
   Access ${name}${
     name !== 'Bastion'
