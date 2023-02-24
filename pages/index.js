@@ -21,22 +21,44 @@ export default function Home() {
     refreshInterval: 30000,
     refreshWhenHidden: true,
   });
-
+  const vmOrder = [
+    'delta-ubuntu1',
+    'thor-ubuntu1',
+    'tr-ubuntu1',
+    'wato2-ubuntu1',
+    'wato3-ubuntu1',
+    'wato-bastion',
+    'ceph-health',
+  ];
+  const cephHealth = 'ceph-health';
   const vmChecks = {};
   let checksTotal = 0;
   let checksError = 0;
   if (checks) {
     checks.checks.forEach((check) => {
-      checksTotal++;
-      check.status == 'down' && checksError++;
-      const name = check.tags.split('host=')[1].split(' ')[0];
-      check.serviceName = check.desc;
-      if (!vmChecks[name]) {
-        vmChecks[name] = {
-          items: [check],
-        };
-      } else {
-        vmChecks[name].items.push(check);
+      const publicTag = check.tags.split('public=')[1];
+      if (publicTag == 'True') {
+        checksTotal++;
+        check.status == 'down' && checksError++;
+        const cephChecks = check.tags.split('check=')[1].split(' ')[0];
+        const name =
+          cephChecks == cephHealth
+            ? cephHealth
+            : check.tags.split('host=')[1].split(' ')[0];
+        check.serviceName = check.desc;
+        if (!vmChecks[name]) {
+          vmChecks[name] = {
+            items: [check],
+            storedItems: [check],
+          };
+        } else if (name == cephHealth) {
+          if (check.status != 'up') {
+            vmChecks[name][0] = check;
+          }
+          vmChecks[name].storedItems.push(check);
+        } else {
+          vmChecks[name].items.push(check);
+        }
       }
     });
   }
@@ -173,9 +195,17 @@ export default function Home() {
         {checks && (
           <div className="grid gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {vmChecks &&
-              Object.entries(vmChecks).map(([vmName, vmChecksData], i) => (
-                <Check key={i} name={vmName} checksData={vmChecksData.items} />
-              ))}
+              Object.entries(vmChecks)
+                .sort((vm1, vm2) => {
+                  return vmOrder.indexOf(vm1[0]) - vmOrder.indexOf(vm2[0]);
+                })
+                .map(([vmName, vmChecksData], i) => (
+                  <Check
+                    key={i}
+                    name={vmName}
+                    checksData={vmChecksData.items}
+                  />
+                ))}
           </div>
         )}
       </div>
