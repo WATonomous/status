@@ -182,14 +182,6 @@ export default function Home() {
           <p style={{ color: 'white', marginRight: 10, marginLeft: 4 }}>
             Outage
           </p>
-          <PauseIcon className="rounded-full h-5 w-5 text-white bg-gray-600" />
-          <p style={{ color: 'white', marginRight: 10, marginLeft: 4 }}>
-            Paused
-          </p>
-          <ExclamationCircleIcon className="rounded-full h-5 w-5 text-white bg-yellow-600" />
-          <p style={{ color: 'white', marginRight: 10, marginLeft: 4 }}>
-            Grace
-          </p>
         </div>
 
         {checks && (

@@ -55,24 +55,14 @@ const Check = ({ name, checksData }) => {
               <div key={i} className="flex items-center my-2">
                 <div
                   className={`rounded-full flex justify-center items-center p-1 mr-4 relative z-10 ${
-                    {
-                      up: 'bg-green-600',
-                      down: 'bg-red-600',
-                      paused: 'bg-gray-600',
-                      grace: 'bg-yellow-600',
-                    }[check.status]
+                    check.status === 'down' ? 'bg-red-600' : 'bg-green-600'
                   }`}
                 >
-                  {
-                    {
-                      up: <CheckIcon className="h-3 w-3 text-white" />,
-                      down: <XIcon className="h-3 w-3 text-white" />,
-                      paused: <PauseIcon className="h-3 w-3 text-white" />,
-                      grace: (
-                        <ExclamationCircleIcon className="h-3 w-3 text-white" />
-                      ),
-                    }[check.status]
-                  }
+                  {check.status === 'down' ? (
+                    <XIcon className="h-3 w-3 text-white" />
+                  ) : (
+                    <CheckIcon className="h-3 w-3 text-white" />
+                  )}
                 </div>
 
                 <div>
