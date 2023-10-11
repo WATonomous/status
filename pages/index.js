@@ -1,76 +1,67 @@
 import Head from 'next/head';
-
+import {
+  CheckIcon,
+  XIcon,
+  PauseIcon,
+  ExclamationCircleIcon,
+} from '@heroicons/react/outline';
 import useSWR from 'swr';
 import fetcher from '../libs/fetch';
 import { useState } from 'react';
 import Check from '../components/Check';
 import { Button, Modal } from 'react-bootstrap';
-import { XIcon } from '@heroicons/react/outline';
 import ReactMarkdown from 'react-markdown';
 import CodeBlock from '../components/CodeBlock';
-
-const VMAdditionalInfo = {
-  'delta-ubuntu1': {
-    FQDN: 'e7-wato-vm2.uwaterloo.ca',
-    machineName: 'delta-ubuntu1.watocluster.local',
-  },
-  'thor-ubuntu1': {
-    FQDN: 'e7-wato-vm1.uwaterloo.ca',
-    machineName: 'thor-ubuntu1.watocluster.local',
-  },
-  'tr-ubuntu1': {
-    FQDN: 'e7-wato-vm9.uwaterloo.ca',
-    machineName: 'tr-ubuntu1.watocluster.local',
-  },
-  'wato2-ubuntu1': {
-    FQDN: 'wato-wato2.uwaterloo.ca',
-    machineName: 'wato2-ubuntu1.watocluster.local',
-  },
-  'wato3-ubuntu1': {
-    FQDN: 'wato-wato3.uwaterloo.ca',
-    machineName: 'wato3-ubuntu1.watocluster.local',
-  },
-  'trpro-ubuntu1': {
-    FQDN: 'trpro-ubuntu1.watocluster.local',
-    machineName: 'trpro-ubuntu1.watocluster.local',
-  },
-  Bastion: {
-    FQDN: 'e7-wato-vm0.uwaterloo.ca',
-  },
-  Ceph: {
-    FQDN: '',
-  },
-};
 
 export default function Home() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const { data: checks, error: errorChecks } = useSWR('/v1/checks/', fetcher, {
+  const { data: checks, error: errorChecks } = useSWR('/v2/checks/', fetcher, {
     refreshInterval: 30000,
     refreshWhenHidden: true,
   });
-
+  const vmOrder = [
+    'delta-ubuntu1',
+    'thor-ubuntu1',
+    'tr-ubuntu1',
+    'wato2-ubuntu1',
+    'wato3-ubuntu1',
+    'wato-bastion',
+    'ceph-health',
+  ];
+  const cephHealth = 'ceph-health';
   const vmChecks = {};
   let checksTotal = 0;
   let checksError = 0;
-
   if (checks) {
     checks.checks.forEach((check) => {
-      checksTotal++;
-      check.status == 'down' && checksError++;
-      const name = check.name.split(' ')[0];
-      check.serviceName = check.name.match(/\(.*\)/)[0].replace(/[()]/g, '');
-      if (!vmChecks[name]) {
-        vmChecks[name] = {
-          items: [check],
-        };
-      } else {
-        vmChecks[name].items.push(check);
+      const publicTag = check.tags.split('public=')[1];
+      if (publicTag == 'True') {
+        checksTotal++;
+        check.status == 'down' && checksError++;
+        const cephChecks = check.tags.split('check=')[1].split(' ')[0];
+        const name =
+          cephChecks == cephHealth
+            ? cephHealth
+            : check.tags.split('host=')[1].split(' ')[0];
+        check.serviceName = check.desc;
+        if (!vmChecks[name]) {
+          vmChecks[name] = {
+            items: [check],
+            storedItems: [check],
+          };
+        } else if (name == cephHealth) {
+          if (check.status != 'up') {
+            vmChecks[name][0] = check;
+          }
+          vmChecks[name].storedItems.push(check);
+        } else {
+          vmChecks[name].items.push(check);
+        }
       }
     });
   }
-
   const serverInstructions = `
   1. Fill out the [onboarding form](https://watonomous.github.io/infra-config/onboarding-form) to request access to the server cluster. Please make sure to provide a valid SSH public key in the form.
   1. Have your WATcloud point-of-contact (e.g. your manager, tech lead, student design team lead, or designated infrastructure support member) approve your request and trigger the provisioning script.
@@ -182,21 +173,22 @@ export default function Home() {
             </Button>
           </Modal.Footer>
         </Modal>
+        <div className="flex justify-center items-center my-2 p-3">
+          <CheckIcon className="rounded-full text-white h-5 w-5 bg-green-600" />
+          <p style={{ color: 'white', marginRight: 10, marginLeft: 4 }}>
+            No Issues
+          </p>
+          <XIcon className="rounded-full h-5 w-5 text-white bg-red-600" />{' '}
+          <p style={{ color: 'white', marginRight: 10, marginLeft: 4 }}>
+            Outage
+          </p>
+        </div>
 
         {checks && (
           <div className="grid gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {vmChecks &&
               Object.entries(vmChecks)
                 .sort((vm1, vm2) => {
-                  const vmOrder = [
-                    'delta-ubuntu1',
-                    'thor-ubuntu1',
-                    'tr-ubuntu1',
-                    'wato2-ubuntu1',
-                    'wato3-ubuntu1',
-                    'Bastion',
-                    'Ceph',
-                  ];
                   return vmOrder.indexOf(vm1[0]) - vmOrder.indexOf(vm2[0]);
                 })
                 .map(([vmName, vmChecksData], i) => (
@@ -204,8 +196,6 @@ export default function Home() {
                     key={i}
                     name={vmName}
                     checksData={vmChecksData.items}
-                    FQDN={VMAdditionalInfo[vmName]?.FQDN}
-                    machineName={VMAdditionalInfo[vmName]?.machineName}
                   />
                 ))}
           </div>
