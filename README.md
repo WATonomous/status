@@ -2,8 +2,9 @@
 
 Still trying to see what this repo will be about. For now it's a barebones status page running on GitHub pages and using the healthchecks.io API. We can probably combine this with what's behind http://vm-status.watonomous.ca.
 
-- `/` is adapted from [healthchecks-front](https://github.com/nicoandrade/healthchecks-front). This only supports one Healthchecks.io project.
-- `/all` is adapted from [healthchecks/dashboard](https://github.com/healthchecks/dashboard). This supports multiple Healthchecks.io projects, but the UI is not as intuitive as `/` at first glance.
+- `/` contains all Terraform-provisioned checks.
+- `/legacy` is adapted from [healthchecks-front](https://github.com/nicoandrade/healthchecks-front). This only supports one Healthchecks.io project.
+- `/legacy2` is adapted from [healthchecks/dashboard](https://github.com/healthchecks/dashboard). This supports multiple Healthchecks.io projects, but the UI is not as intuitive as `/` at first glance.
 
 ### Development
 
