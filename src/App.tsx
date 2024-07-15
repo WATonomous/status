@@ -9,10 +9,10 @@ function App() {
   const [count, setCount] = useState(0)
 
   const { data: hcData, error: hcError, isLoading: hcIsLoading } = useSWR('/api/v2/checks/', healthchecksioFetcher);
-  // const { data: sentryData, error: sentryError, isLoading: sentryIsLoading } = useSWR('/api/0/organizations/watonomous/monitors/', sentryFetcher);
+  const { data: sentryData, error: sentryError, isLoading: sentryIsLoading } = useSWR('/api/0/organizations/watonomous/monitors/', sentryFetcher);
 
   console.log(hcData, hcError, hcIsLoading);
-  // console.log(sentryData, sentryError, sentryIsLoading);
+  console.log(sentryData, sentryError, sentryIsLoading);
 
   return (
     <>

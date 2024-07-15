@@ -23,13 +23,13 @@ jobs:
       - name: Build
         run: |
           npm ci
-          npm run export
+          npm run build
 
       - name: Upload build output
         uses: actions/upload-artifact@v3
         with:
           name: build-output
-          path: ./out
+          path: ./dist
 
   deploy_prod:
     runs-on: ubuntu-latest
@@ -43,7 +43,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build-output
-          path: ./out
+          path: ./dist
 
       - name: Set up mutex
         uses: ben-z/gh-action-mutex@v1.0-alpha-3
@@ -55,7 +55,7 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4.2.5
         with:
           branch: gh-pages
-          folder: ./out
+          folder: ./dist
           clean-exclude: previews/*
 
   deploy_preview:
@@ -75,7 +75,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build-output
-          path: ./out
+          path: ./dist
 
       - name: Set up mutex
         uses: ben-z/gh-action-mutex@v1.0-alpha-3
@@ -87,7 +87,7 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4.2.5
         with:
           branch: gh-pages
-          folder: ./out
+          folder: ./dist
           target-folder: './previews/pr-${{ github.event.pull_request.number }}/${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}'
 
       - name: Create comment
