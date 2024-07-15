@@ -8,6 +8,9 @@ on:
 
   workflow_dispatch:
 
+env:
+  DEPLOY_PATH: ${{ github.ref_name == 'main' && '/' || '/previews/pr-${{ github.event.pull_request.number }}/${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}' }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -88,7 +91,7 @@ jobs:
         with:
           branch: gh-pages
           folder: ./dist
-          target-folder: './previews/pr-${{ github.event.pull_request.number }}/${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}'
+          target-folder: '.${{ env.DEPLOY_PATH }}'
 
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v2
@@ -99,4 +102,4 @@ jobs:
             It will be ready in about a minute. [You can view it here][preview].
 
             [compare]: ${{ github.event.pull_request.head.repo.html_url }}/compare/${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}
-            [preview]: ${{ github.event.pull_request.head.repo.homepage }}/previews/pr-${{ github.event.pull_request.number }}/${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}
+            [preview]: ${{ github.event.pull_request.head.repo.homepage }}${{ env.DEPLOY_PATH }}
