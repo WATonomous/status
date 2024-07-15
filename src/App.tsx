@@ -1,30 +1,28 @@
 import { useState } from 'react'
 import useSWR from 'swr'
 import './App.css'
-import reactLogo from './assets/react.svg'
 import { healthchecksioFetcher, sentryFetcher } from './utils'
-import viteLogo from '/vite.svg'
+// import viteLogo from '/vite.svg'
+import watcloudLogo from '/favicon-dark.svg'
 
 function App() {
   const [count, setCount] = useState(0)
 
-  const { data: hcData, error: hcError, isLoading: hcIsLoading } = useSWR('/api/v2/checks/', healthchecksioFetcher);
-  const { data: sentryData, error: sentryError, isLoading: sentryIsLoading } = useSWR('/api/0/organizations/watonomous/monitors/', sentryFetcher);
+  const { data: hcData, error: hcError, isLoading: hcIsLoading } = useSWR('/api/v2/checks/', healthchecksioFetcher, { refreshInterval: 5000 });
+  const { data: sentryData, error: sentryError, isLoading: sentryIsLoading } = useSWR('/api/0/organizations/watonomous/monitors/', sentryFetcher, { refreshInterval: 5000 });
 
+  console.log("==================")
   console.log(hcData, hcError, hcIsLoading);
   console.log(sentryData, sentryError, sentryIsLoading);
 
   return (
     <>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
+        <a href="https://cloud.watonomous.ca" target="_blank">
+          <img src={watcloudLogo} className="logo" alt="WATcloud logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
+      <h1>WATcloud Status</h1>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
