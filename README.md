@@ -1,35 +1,14 @@
-# WATonomous Status
+# WATcloud Status Page
 
-Still trying to see what this repo will be about. For now it's a barebones status page running on GitHub pages and using the healthchecks.io API. We can probably combine this with what's behind http://vm-status.watonomous.ca.
+The [WATcloud Status Page](https://status.watonomous.ca) is a frontend-only web app that pulls data from various sources like [Healthchecks.io](https://healthchecks.io)
+and [Sentry](https://sentry.io) to provide a single place to view the health of WATcloud.
 
-- `/` contains all Terraform-provisioned checks.
-- `/legacy` is adapted from [healthchecks-front](https://github.com/nicoandrade/healthchecks-front). This only supports one Healthchecks.io project.
-- `/legacy2` is adapted from [healthchecks/dashboard](https://github.com/healthchecks/dashboard). This supports multiple Healthchecks.io projects, but the UI is not as intuitive as `/` at first glance.
+## Development
 
-### Development
-
-To start a development server:
+To run the status page locally, you will need to have [Node.js](https://nodejs.org/en/) installed.
+Then, you can run the following commands to install dependencies and start the development server:
 
 ```bash
-npm ci # install dependencies without updating them
+npm install
 npm run dev
 ```
-
-### Testing
-
-To verify that the static export is working, do this in the root of the project:
-
-```bash
-npm run export
-cd out
-python3 -m http.server 8082
-```
-
-Then head to http://localhost:8082 to ensure that the changes are as expected. \
-Note: Go to http://localhost:8082/all.html to view to page to `/all`
-
-### Deployment
-
-We deploy healthchecks-front by [exporting the Next.js application as static HTML](https://nextjs.org/docs/advanced-features/static-html-export), then hosting it with [GitHub Pages](https://pages.github.com).
-
-The HTML-generation process is currently automated with Github Actions. Any changes committed to `main` will trigger the [deployment process](https://github.com/WATonomous/status/actions/workflows/deploy.yml).

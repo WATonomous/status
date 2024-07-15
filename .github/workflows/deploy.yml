@@ -8,6 +8,13 @@ on:
 
   workflow_dispatch:
 
+concurrency: provision_concurrency_group-${{ github.event.pull_request.number || github.ref_name }}
+
+env:
+  # This is used during the build step (vite.config.js) to determine the base URL.
+  # https://vitejs.dev/guide/static-deploy#github-pages
+  DEPLOY_PATH: ${{ github.ref_name == 'main' && '/' || format('/previews/pr-{0}/{1}...{2}', github.event.pull_request.number, github.event.pull_request.base.sha, github.event.pull_request.head.sha) }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -23,13 +30,13 @@ jobs:
       - name: Build
         run: |
           npm ci
-          npm run export
+          npm run build
 
       - name: Upload build output
         uses: actions/upload-artifact@v3
         with:
           name: build-output
-          path: ./out
+          path: ./dist
 
   deploy_prod:
     runs-on: ubuntu-latest
@@ -43,7 +50,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build-output
-          path: ./out
+          path: ./dist
 
       - name: Set up mutex
         uses: ben-z/gh-action-mutex@v1.0-alpha-3
@@ -55,7 +62,7 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4.2.5
         with:
           branch: gh-pages
-          folder: ./out
+          folder: ./dist
           clean-exclude: previews/*
 
   deploy_preview:
@@ -75,7 +82,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build-output
-          path: ./out
+          path: ./dist
 
       - name: Set up mutex
         uses: ben-z/gh-action-mutex@v1.0-alpha-3
@@ -87,8 +94,8 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4.2.5
         with:
           branch: gh-pages
-          folder: ./out
-          target-folder: './previews/pr-${{ github.event.pull_request.number }}/${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}'
+          folder: ./dist
+          target-folder: '.${{ env.DEPLOY_PATH }}'
 
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v2
@@ -99,4 +106,4 @@ jobs:
             It will be ready in about a minute. [You can view it here][preview].
 
             [compare]: ${{ github.event.pull_request.head.repo.html_url }}/compare/${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}
-            [preview]: ${{ github.event.pull_request.head.repo.homepage }}/previews/pr-${{ github.event.pull_request.number }}/${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}
+            [preview]: ${{ github.event.pull_request.head.repo.homepage }}${{ env.DEPLOY_PATH }}
