@@ -83,10 +83,12 @@ export function HealthchecksioStatus({ showInternal, initialGroupKey = "" }: { s
   const checks = (processHCData(dataRaw) || []).filter(check => check.tags_dict.public !== 'False' || showInternal).sort((a, b) => a.name.localeCompare(b.name));
   const groupedChecks = groupBy(checks, c => c.tags_dict[groupKey]);
 
+  const errorHelp = "Please see the console for more information.";
+
   return (
     <div className="my-4">
       {isLoading && <p className='text-gray-500'>Loading...</p>}
-      {error && <p className='text-red-500'>Error: {error.message}</p>}
+      {error && <p className='text-red-500'>Error: {error.message}. {errorHelp}</p>}
       {checks && checks.length > 0 && (
         <>
           <StatusSummary statuses={checks.map(check => getStatus(check.status))} symbolClassName="text-xl" className="mb-4" />

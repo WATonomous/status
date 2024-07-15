@@ -29,10 +29,12 @@ export function SentryStatus() {
     monitors.sort((a: any, b: any) => a.name.localeCompare(b.name));
   }
 
+  const errorHelp = error?.toString() == "TypeError: Failed to fetch" ? "Is the request blocked by an adblocker?" : "Please see the console for more information.";
+
   return (
     <div className="my-4">
       {isLoading && <p className='text-gray-500'>Loading...</p>}
-      {error && <p className='text-red-500'>Error: {error.message}</p>}
+      {error && <p className='text-red-500'>Error: {error.message}. {errorHelp}</p>}
       {monitors && monitors.length > 0 && (
         <>
           <StatusSummary statuses={monitors.flatMap((monitor: any) => monitor.environments?.map((environment: any) => getStatus(environment.status)))} symbolClassName="text-xl" className="mb-4" />
