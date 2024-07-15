@@ -10,6 +10,7 @@ on:
 
 env:
   # This is used during the build step (vite.config.js) to determine the base URL.
+  # https://vitejs.dev/guide/static-deploy#github-pages
   DEPLOY_PATH: ${{ github.ref_name == 'main' && '/' || '/previews/pr-${{ github.event.pull_request.number }}/${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}' }}
 
 jobs:
