@@ -1,4 +1,6 @@
+import { twMerge } from "tailwind-merge";
 import { HEALTHCHECKSIO_API_KEY, SENTRY_API_KEY } from "./constants";
+import clsx, { ClassValue } from "clsx";
 
 export async function healthchecksioFetcher(path: string, options?: RequestInit) {
   const url = `https://healthchecks.io${path}`;
@@ -54,4 +56,22 @@ export function groupBy<T>(list: T[], keyGetter: (item: T) => string | number): 
     }
   });
   return map;
+}
+
+export function removePrefix(str: string, prefix: string) {
+  if (str.startsWith(prefix)) {
+    return str.slice(prefix.length);
+  }
+  return str;
+}
+
+export function removeSuffix(str: string, suffix: string) {
+  if (str.endsWith(suffix)) {
+    return str.slice(0, -suffix.length);
+  }
+  return str;
+}
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
 }

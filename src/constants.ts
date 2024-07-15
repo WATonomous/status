@@ -12,3 +12,9 @@ export const HEALTHCHECKSIO_API_KEY = 'tCsst0GSKpfvslmpmlsmivRrUCRuv6Iv'
 // We'd get a 400 error with the message "Invalid origin" otherwise.
 // https://github.com/getsentry/sentry/issues/15310#issuecomment-650443556
 export const SENTRY_API_KEY = '53ab13b4337a937bc66eec3a4b3f836b14dd51890fde15fd51b9523eb598382c'
+
+export const STATUS_SYMBOLS = {
+  good: '🟢',
+  neutral: '🟡',
+  bad: '🔴',
+} as const;

@@ -1,40 +1,15 @@
-import { useState } from 'react'
 import useSWR from 'swr'
 import './App.css'
-import { healthchecksioFetcher, sentryFetcher } from './utils'
+import { sentryFetcher } from './utils'
 import WATcloudLogo from './assets/watcloud-logo'
-
-function processHCData(data: any) {
-  if (!data) {
-    return null;
-  }
-  return data.checks?.map((check: any) => {
-    const tags = check.tags.split(' ');
-
-    const additionalAttributes: Record<string, string> = {};
-    for (const tag of tags) {
-      if (!tag.includes('=')) {
-        continue;
-      }
-      const [key, value] = tag.split('=');
-      additionalAttributes[key] = value;
-    }
-
-    return {
-      ...check,
-      ...additionalAttributes,
-    };
-  });
-}
+import { HealthchecksioStatus } from './healthchecksio'
+import { useState } from 'react'
 
 function App() {
-  const { data: hcDataRaw, error: hcError, isLoading: hcIsLoading } = useSWR('/api/v2/checks/', healthchecksioFetcher, { refreshInterval: 5000 });
+  const [showInternal, setShowInternal] = useState(false);
   const { data: sentryDataRaw, error: sentryError, isLoading: sentryIsLoading } = useSWR('/api/0/organizations/watonomous/monitors/', sentryFetcher, { refreshInterval: 5000 });
 
-  const hcData = processHCData(hcDataRaw);
-
   console.log("==================")
-  console.log(hcDataRaw, hcData, hcError, hcIsLoading);
   console.log(sentryDataRaw, sentryError, sentryIsLoading);
 
   return (
@@ -51,12 +26,15 @@ function App() {
         </div>
       </div>
       <div className="mb-8">
+        <h2 className="text-xl">Options</h2>
+        <span className="text-sm text-gray-500 flex items-center justify-center">
+          <input type="checkbox" id="show-internal" checked={showInternal} onChange={() => setShowInternal(!showInternal)} />
+          <label htmlFor="show-internal" className="ml-1">Show internal checks</label>
+        </span>
+      </div>
+      <div className="mb-8">
         <h2 className="text-2xl">Healthchecks.io</h2>
-        {hcIsLoading && <p className='text-gray-500'>Loading...</p>}
-        {hcError && <p className='text-red-500'>Error: {hcError.message}</p>}
-        <h3 className="text-xl">Group by host</h3>
-        <div className="flex">
-        </div>
+        <HealthchecksioStatus showInternal={showInternal} />
       </div>
       <div className="mb-8">
         <h2 className="text-2xl">Sentry</h2>
