@@ -1,35 +1,30 @@
-# WATonomous Status
+# React + TypeScript + Vite
 
-Still trying to see what this repo will be about. For now it's a barebones status page running on GitHub pages and using the healthchecks.io API. We can probably combine this with what's behind http://vm-status.watonomous.ca.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-- `/` contains all Terraform-provisioned checks.
-- `/legacy` is adapted from [healthchecks-front](https://github.com/nicoandrade/healthchecks-front). This only supports one Healthchecks.io project.
-- `/legacy2` is adapted from [healthchecks/dashboard](https://github.com/healthchecks/dashboard). This supports multiple Healthchecks.io projects, but the UI is not as intuitive as `/` at first glance.
+Currently, two official plugins are available:
 
-### Development
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-To start a development server:
+## Expanding the ESLint configuration
 
-```bash
-npm ci # install dependencies without updating them
-npm run dev
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+
+- Configure the top-level `parserOptions` property like this:
+
+```js
+export default {
+  // other rules...
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    project: ['./tsconfig.json', './tsconfig.node.json'],
+    tsconfigRootDir: __dirname,
+  },
+}
 ```
 
-### Testing
-
-To verify that the static export is working, do this in the root of the project:
-
-```bash
-npm run export
-cd out
-python3 -m http.server 8082
-```
-
-Then head to http://localhost:8082 to ensure that the changes are as expected. \
-Note: Go to http://localhost:8082/all.html to view to page to `/all`
-
-### Deployment
-
-We deploy healthchecks-front by [exporting the Next.js application as static HTML](https://nextjs.org/docs/advanced-features/static-html-export), then hosting it with [GitHub Pages](https://pages.github.com).
-
-The HTML-generation process is currently automated with Github Actions. Any changes committed to `main` will trigger the [deployment process](https://github.com/WATonomous/status/actions/workflows/deploy.yml).
+- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
+- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
