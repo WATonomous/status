@@ -28,33 +28,41 @@ function processHCData(data: any) {
 }
 
 function App() {
-  const [count, setCount] = useState(0)
-
   const { data: hcDataRaw, error: hcError, isLoading: hcIsLoading } = useSWR('/api/v2/checks/', healthchecksioFetcher, { refreshInterval: 5000 });
   const { data: sentryDataRaw, error: sentryError, isLoading: sentryIsLoading } = useSWR('/api/0/organizations/watonomous/monitors/', sentryFetcher, { refreshInterval: 5000 });
 
+  const hcData = processHCData(hcDataRaw);
+
   console.log("==================")
-  console.log(hcDataRaw, processHCData(hcDataRaw), hcError, hcIsLoading);
+  console.log(hcDataRaw, hcData, hcError, hcIsLoading);
   console.log(sentryDataRaw, sentryError, sentryIsLoading);
 
   return (
     <>
-      <div>
-        <a href="https://cloud.watonomous.ca" target="_blank" className="main-logo">
-          <WATcloudLogo className="inline" />
-        </a>
+      <div className="grid lg:grid-cols-2 lg:divide-x mb-8">
+        <div className="lg:text-right lg:pr-8">
+          <a href="https://cloud.watonomous.ca" target="_blank"v className="main-logo">
+            <WATcloudLogo className="inline" />
+          </a>
+        </div>
+        <div className="lg:text-left lg:pl-8 py-2">
+          <h1 className="text-3xl">Infrastructure Status</h1>
+          <h2 className="text-lg text-gray-500">An overview of the health of WATcloud services</h2>
+        </div>
       </div>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+      <div className="mb-8">
+        <h2 className="text-2xl">Healthchecks.io</h2>
+        {hcIsLoading && <p className='text-gray-500'>Loading...</p>}
+        {hcError && <p className='text-red-500'>Error: {hcError.message}</p>}
+        <h3 className="text-xl">Group by host</h3>
+        <div className="flex">
+        </div>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <div className="mb-8">
+        <h2 className="text-2xl">Sentry</h2>
+        {sentryIsLoading && <p className='text-gray-500'>Loading...</p>}
+        {sentryError && <p className='text-red-500'>Error: {sentryError.message}. Is your adblocker blocking the request?</p>}
+      </div>
     </>
   )
 }

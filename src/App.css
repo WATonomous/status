@@ -4,16 +4,8 @@
   text-align: center;
 }
 
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
-
 .main-logo > svg {
-  height: 6rem;
+  height: 5rem;
   mask-image: linear-gradient(
     60deg,
     black 25%,
