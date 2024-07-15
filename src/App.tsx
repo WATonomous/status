@@ -5,6 +5,9 @@ import { healthchecksioFetcher, sentryFetcher } from './utils'
 import WATcloudLogo from './assets/watcloud-logo'
 
 function processHCData(data: any) {
+  if (!data) {
+    return null;
+  }
   return data.checks?.map((check: any) => {
     const tags = check.tags.split(' ');
 
