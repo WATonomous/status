@@ -36,3 +36,8 @@ export async function sentryFetcher(path: string, options?: RequestInit) {
 
   return res.json();
 }
+
+// Derived from https://github.com/juliencrn/usehooks-ts/blob/20667273744a22dd2cd2c48c38cd3c10f254ae47/packages/usehooks-ts/src/useMediaQuery/useMediaQuery.ts
+export function isDarkMode() {
+  return window.matchMedia('(prefers-color-scheme: dark)').matches;
+}

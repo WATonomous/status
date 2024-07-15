@@ -18,7 +18,7 @@ function App() {
     <>
       <div>
         <a href="https://cloud.watonomous.ca" target="_blank" className="main-logo">
-          <WATcloudLogo />
+          <WATcloudLogo className="inline" />
         </a>
       </div>
       <div className="card">

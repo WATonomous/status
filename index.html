@@ -16,10 +16,20 @@
       type="image/png"
       media="(prefers-color-scheme: dark)"
     />
+    <meta name="theme-color" content="#111" media="(prefers-color-scheme: dark)">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>WATcloud Status</title>
-  </head>
   <body>
+    <script>
+      // This script prevents FOUC (flash of unstyled content) by setting the
+      // `dark` class and `color-scheme` meta attribute before the page is
+      // rendered.
+      // TODO: Add local storage call when implemented.
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.classList.toggle('dark', true);
+        document.documentElement.style.setProperty('color-scheme', 'dark');
+      }
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
