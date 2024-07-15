@@ -47,7 +47,7 @@
   */
   .dark,
   :root[class~="dark"] {
-    --background: 222.2 84% 4.9%;
+    --background: rgba(17, 17, 17, 1);
     --foreground: 210 40% 98%;
 
     --card: 222.2 84% 4.9%;
@@ -95,4 +95,11 @@
 
 code {
   font-size: 0.8em;
+}
+
+a {
+  @apply text-blue-500;
+  &:hover {
+    @apply underline;
+  }
 }

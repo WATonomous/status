@@ -36,7 +36,15 @@ function App() {
         </div>
       </div>
       <div className="mb-8">
-        <h2 className="text-xl">Options</h2>
+        <h2 className="text-2xl">Useful Links</h2>
+        <ul>
+          <li><a href="https://cloud.watonomous.ca" target="_blank">Documentation</a></li>
+          <li><a href="https://github.com/WATonomous/infrastructure-support/discussions" target="_blank">Announcements</a></li>
+          <li><a href="./legacy.html">Legacy Status Page</a></li>
+        </ul>
+      </div>
+      <div className="mb-8">
+        <h2 className="text-2xl">Options</h2>
         <span className="text-sm text-gray-500 flex items-center justify-center">
           <input type="checkbox" id="show-internal" checked={showInternal} onChange={() => setShowInternal(!showInternal)} />
           <label htmlFor="show-internal" className="ml-1">Show internal checks</label>
@@ -44,10 +52,12 @@ function App() {
       </div>
       <div className="mb-8">
         <h2 className="text-2xl">Healthchecks.io</h2>
+        <h3 className="text-lg text-gray-500">Monitoring data from healthchecks.io</h3>
         <HealthchecksioStatus showInternal={showInternal} {...healthchecksioOptions} />
       </div>
       <div className="mb-8">
         <h2 className="text-2xl">Sentry</h2>
+        <h3 className="text-lg text-gray-500">Monitoring data from watonomous.sentry.io</h3>
         <SentryStatus {...sentryOptions} />
       </div>
     </>

@@ -21,3 +21,10 @@
     mask-position 1s ease,
     -webkit-mask-position 1s ease;
 }
+
+.main-logo {
+  @apply text-inherit;
+  &:hover {
+    @apply text-inherit;
+  }
+}
