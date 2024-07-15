@@ -92,3 +92,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+code {
+  font-size: 0.8em;
+}
