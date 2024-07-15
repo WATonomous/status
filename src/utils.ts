@@ -10,7 +10,6 @@ export async function healthchecksioFetcher(path: string, options?: RequestInit)
     headers: {
       Accept: 'application/json',
       'X-Api-Key': HEALTHCHECKSIO_API_KEY,
-      'Referrer-Policy': 'strict-origin-when-cross-origin',
       ...options?.headers,
     },
   });
