@@ -41,3 +41,17 @@ export async function sentryFetcher(path: string, options?: RequestInit) {
 export function isDarkMode() {
   return window.matchMedia('(prefers-color-scheme: dark)').matches;
 }
+
+export function groupBy<T>(list: T[], keyGetter: (item: T) => string | number): Record<string | number, T[]> {
+  const map: Record<string | number, T[]> = {};
+  list.forEach((item) => {
+    const key = keyGetter(item);
+    const collection = map[key];
+    if (!collection) {
+      map[key] = [item];
+    } else {
+      collection.push(item);
+    }
+  });
+  return map;
+}
