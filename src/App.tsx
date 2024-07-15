@@ -6,7 +6,22 @@ import { HealthchecksioStatus } from './healthchecksio'
 import { useState } from 'react'
 
 function App() {
-  const [showInternal, setShowInternal] = useState(false);
+  // Parse options from the URL
+  const options = new URLSearchParams(document.location.search);
+  const globalOptions = {
+    showInternal: options.get('showInternal') === 'true' || false,
+  }
+  const healthchecksioOptions: Record<string, string> = {}
+  const sentryOptions: Record<string, string> = {}
+  for (const [key, value] of options.entries()) {
+    if (key.startsWith('hc_')) {
+      healthchecksioOptions[key.substring('hc_'.length)] = value;
+    } else if (key.startsWith('sentry_')) {
+      sentryOptions[key.substring('sentry_'.length)] = value;
+    }
+  }
+
+  const [showInternal, setShowInternal] = useState(globalOptions.showInternal);
   const { data: sentryDataRaw, error: sentryError, isLoading: sentryIsLoading } = useSWR('/api/0/organizations/watonomous/monitors/', sentryFetcher, { refreshInterval: 5000 });
 
   console.log("==================")
@@ -34,7 +49,7 @@ function App() {
       </div>
       <div className="mb-8">
         <h2 className="text-2xl">Healthchecks.io</h2>
-        <HealthchecksioStatus showInternal={showInternal} />
+        <HealthchecksioStatus showInternal={showInternal} {...healthchecksioOptions} />
       </div>
       <div className="mb-8">
         <h2 className="text-2xl">Sentry</h2>

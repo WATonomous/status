@@ -75,7 +75,7 @@ function shortenCheckName(groupKey: typeof GROUP_KEYS[number], groupName: string
 }
 
 export function HealthchecksioStatus({ showInternal, initialGroupKey = "" }: { showInternal?: boolean, initialGroupKey?: string }) {
-  const [groupKey, setGroupKey] = useState((initialGroupKey in GROUP_KEYS ? initialGroupKey : GROUP_KEYS[0]) as typeof GROUP_KEYS[number]);
+  const [groupKey, setGroupKey] = useState((GROUP_KEYS.includes(initialGroupKey as any) ? initialGroupKey : GROUP_KEYS[0]) as typeof GROUP_KEYS[number]);
   const { data: dataRaw, error, isLoading } = useSWR('/api/v3/checks/', healthchecksioFetcher, { refreshInterval: 10000 });
 
   const checks = (processHCData(dataRaw) || []).filter(check => check.tags_dict.public !== 'False' || showInternal);
