@@ -8,10 +8,12 @@ on:
 
   workflow_dispatch:
 
+concurrency: provision_concurrency_group-${{ github.event.pull_request.number || github.ref_name }}
+
 env:
   # This is used during the build step (vite.config.js) to determine the base URL.
   # https://vitejs.dev/guide/static-deploy#github-pages
-  DEPLOY_PATH: ${{ github.ref_name == 'main' && '/' || '/previews/pr-${{ github.event.pull_request.number }}/${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}' }}
+  DEPLOY_PATH: ${{ github.ref_name == 'main' && '/' || format('/previews/pr-{0}/{1}...{2}', github.event.pull_request.number, github.event.pull_request.base.sha, github.event.pull_request.head.sha) }}
 
 jobs:
   build:
