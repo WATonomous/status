@@ -2,6 +2,10 @@
 // https://healthchecks.io/projects/7acc2ad3-f672-40c9-a061-12c8fd128f8b/settings/
 export const HEALTHCHECKSIO_API_KEY = 'tCsst0GSKpfvslmpmlsmivRrUCRuv6Iv'
 
-// read-only API key for the Sentry admin user. Obtained from:
-// https://watonomous.sentry.io/settings/account/api/auth-tokens/
-export const SENTRY_API_KEY = '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'
+// read-only API key with the "org scope" for Sentry. Obtained by creating an internal integration:
+// https://watonomous.sentry.io/settings/developer-settings/statuswatonomousca-be7323/
+// 
+// "Authorized JavaScript Origins" is set to `localhost` and `status.watonomous.ca`.
+// We'd get a 400 error with the message "Invalid origin" otherwise.
+// https://github.com/getsentry/sentry/issues/15310#issuecomment-650443556
+export const SENTRY_API_KEY = '53ab13b4337a937bc66eec3a4b3f836b14dd51890fde15fd51b9523eb598382c'
