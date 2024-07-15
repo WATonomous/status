@@ -1,7 +1,7 @@
 import { useState } from "react";
 import useSWR from "swr";
 import { groupBy, healthchecksioFetcher, removePrefix, removeSuffix, timeSinceShort } from "./utils";
-import { STATUS_SYMBOLS } from "./constants";
+import { Status, STATUS_SYMBOLS } from "./constants";
 import { StatusSummary } from "./summary";
 import { OptionGroup } from "./option-group";
 
@@ -45,22 +45,24 @@ function processHCData(data: any): HealthchecksioCheck[] | undefined {
   });
 }
 
-function getStatusSymbol(status: HealthchecksioCheckStatus) {
+function getStatus(status: HealthchecksioCheckStatus) {
   return {
-    new: STATUS_SYMBOLS.neutral,
-    up: STATUS_SYMBOLS.good,
-    grace: STATUS_SYMBOLS.good,
-    down: STATUS_SYMBOLS.bad,
-    paused: '⏸️',
+    new: Status.Neutral,
+    up: Status.Good,
+    grace: Status.Good,
+    down: Status.Bad,
+    paused: 'paused',
   }[status];
 }
 
-function CheckStatus({ status }: { status: HealthchecksioCheckStatus }) {
-  return (
-    <span role="img" aria-label={status}>
-      {getStatusSymbol(status)}
-    </span>
-  );
+function getStatusSymbol(status: HealthchecksioCheckStatus) {
+  return {
+    new: STATUS_SYMBOLS[Status.Neutral],
+    up: STATUS_SYMBOLS[Status.Good],
+    grace: STATUS_SYMBOLS[Status.Good],
+    down: STATUS_SYMBOLS[Status.Bad],
+    paused: '⏸️',
+  }[status];
 }
 
 const GROUP_KEYS = ['host', 'check'] as const;
@@ -78,7 +80,7 @@ export function HealthchecksioStatus({ showInternal, initialGroupKey = "" }: { s
   const [groupKey, setGroupKey] = useState((GROUP_KEYS.includes(initialGroupKey as any) ? initialGroupKey : GROUP_KEYS[0]) as typeof GROUP_KEYS[number]);
   const { data: dataRaw, error, isLoading } = useSWR('/api/v3/checks/', healthchecksioFetcher, { refreshInterval: 5000 });
 
-  const checks = (processHCData(dataRaw) || []).filter(check => check.tags_dict.public !== 'False' || showInternal);
+  const checks = (processHCData(dataRaw) || []).filter(check => check.tags_dict.public !== 'False' || showInternal).sort((a, b) => a.name.localeCompare(b.name));
   const groupedChecks = groupBy(checks, c => c.tags_dict[groupKey]);
 
   return (
@@ -87,7 +89,7 @@ export function HealthchecksioStatus({ showInternal, initialGroupKey = "" }: { s
       {error && <p className='text-red-500'>Error: {error.message}</p>}
       {checks && checks.length > 0 && (
         <>
-          <StatusSummary symbols={checks.map(check => getStatusSymbol(check.status))} symbolClassName="text-xl" className="mb-4" />
+          <StatusSummary statuses={checks.map(check => getStatus(check.status))} symbolClassName="text-xl" className="mb-4" />
           <div>
             <span className="text-sm text-gray-500 flex items-center justify-center mb-1">Group by:</span>
             <OptionGroup
@@ -108,7 +110,7 @@ export function HealthchecksioStatus({ showInternal, initialGroupKey = "" }: { s
                     <li key={check.name} className="flex justify-between">
                       <span>{shortenCheckName(groupKey, group, check.name)} <span className="text-sm text-gray-500" aria-label="last update time"
                         title={`Last updated at ${check.last_ping}`}>{timeSinceShort(new Date(check.last_ping))} ago</span></span>
-                      <CheckStatus status={check.status} />
+                      <span title={check.status}>{getStatusSymbol(check.status)}</span>
                     </li>
                   ))}
                 </ul>

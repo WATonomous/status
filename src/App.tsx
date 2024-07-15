@@ -1,9 +1,8 @@
-import useSWR from 'swr'
 import './App.css'
-import { sentryFetcher } from './utils'
 import WATcloudLogo from './assets/watcloud-logo'
 import { HealthchecksioStatus } from './healthchecksio'
 import { useState } from 'react'
+import { SentryStatus } from './sentry'
 
 function App() {
   // Parse options from the URL
@@ -22,10 +21,6 @@ function App() {
   }
 
   const [showInternal, setShowInternal] = useState(globalOptions.showInternal);
-  const { data: sentryDataRaw, error: sentryError, isLoading: sentryIsLoading } = useSWR('/api/0/organizations/watonomous/monitors/', sentryFetcher, { refreshInterval: 5000 });
-
-  console.log("==================")
-  console.log(sentryDataRaw, sentryError, sentryIsLoading);
 
   return (
     <>
@@ -53,8 +48,7 @@ function App() {
       </div>
       <div className="mb-8">
         <h2 className="text-2xl">Sentry</h2>
-        {sentryIsLoading && <p className='text-gray-500'>Loading...</p>}
-        {sentryError && <p className='text-red-500'>Error: {sentryError.message}. Is your adblocker blocking the request?</p>}
+        <SentryStatus {...sentryOptions} />
       </div>
     </>
   )
