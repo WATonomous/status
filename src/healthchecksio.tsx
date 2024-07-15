@@ -1,6 +1,6 @@
 import { useState } from "react";
 import useSWR from "swr";
-import { groupBy, healthchecksioFetcher, removePrefix, removeSuffix } from "./utils";
+import { groupBy, healthchecksioFetcher, removePrefix, removeSuffix, timeSinceShort } from "./utils";
 import { STATUS_SYMBOLS } from "./constants";
 import { StatusSummary } from "./summary";
 import { OptionGroup } from "./option-group";
@@ -76,7 +76,7 @@ function shortenCheckName(groupKey: typeof GROUP_KEYS[number], groupName: string
 
 export function HealthchecksioStatus({ showInternal, initialGroupKey = "" }: { showInternal?: boolean, initialGroupKey?: string }) {
   const [groupKey, setGroupKey] = useState((GROUP_KEYS.includes(initialGroupKey as any) ? initialGroupKey : GROUP_KEYS[0]) as typeof GROUP_KEYS[number]);
-  const { data: dataRaw, error, isLoading } = useSWR('/api/v3/checks/', healthchecksioFetcher, { refreshInterval: 10000 });
+  const { data: dataRaw, error, isLoading } = useSWR('/api/v3/checks/', healthchecksioFetcher, { refreshInterval: 5000 });
 
   const checks = (processHCData(dataRaw) || []).filter(check => check.tags_dict.public !== 'False' || showInternal);
   const groupedChecks = groupBy(checks, c => c.tags_dict[groupKey]);
@@ -99,14 +99,15 @@ export function HealthchecksioStatus({ showInternal, initialGroupKey = "" }: { s
               selectedClassName="bg-blue-500 text-white"
             />
           </div>
-          <div className="grid px-8 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 gap-4">
+          <div className="grid px-8 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 sm:grid-cols-2 gap-4">
             {Object.entries(groupedChecks).sort().map(([group, checks]) => (
               <div key={group} className="border p-4">
                 <h4 className="text-lg">{group}</h4>
                 <ul>
                   {checks.map(check => (
                     <li key={check.name} className="flex justify-between">
-                      <span>{shortenCheckName(groupKey, group, check.name)}</span>
+                      <span>{shortenCheckName(groupKey, group, check.name)} <span className="text-sm text-gray-500" aria-label="last update time"
+                        title={`Last updated at ${check.last_ping}`}>{timeSinceShort(new Date(check.last_ping))} ago</span></span>
                       <CheckStatus status={check.status} />
                     </li>
                   ))}

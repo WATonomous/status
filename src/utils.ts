@@ -75,3 +75,42 @@ export function removeSuffix(str: string, suffix: string) {
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
+
+export function timeSince(date: Date): string {
+  let v: number = Math.floor((new Date().getTime() - date.getTime()) / 1000);
+
+  if (v < 60) {
+    // v is seconds
+    return v + ' second' + (v === 1 ? '' : 's');
+  }
+
+  v = Math.floor(v / 60); // v is now minutes
+  if (v < 60) {
+    return v + ' minute' + (v === 1 ? '' : 's');
+  }
+
+  v = Math.floor(v / 60); // v is now hours
+  if (v < 24) {
+    return v + ' hour' + (v === 1 ? '' : 's');
+  }
+
+  v = Math.floor(v / 24); // v is now days
+  return v + ' day' + (v === 1 ? '' : 's');
+}
+
+export function timeSinceShort(date: Date): string {
+  const seconds = Math.floor((new Date().getTime() - date.getTime()) / 1000);
+  const units: [number, string][] = [
+    [60, 's'],
+    [60, 'm'],
+    [24, 'h'],
+    [Number.MAX_SAFE_INTEGER, 'd']
+  ];
+
+  let value = seconds;
+  for (const [unit, suffix] of units) {
+    if (value < unit) return `${value}${suffix}`;
+    value = Math.floor(value / unit);
+  }
+  return `${value}d`;
+}
