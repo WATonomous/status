@@ -18,7 +18,7 @@ function getStatusSymbol(status: SentryStatus) {
 }
 
 export function SentryStatus() {
-  const { data: monitors, error, isLoading } = useSWR('/api/0/organizations/watonomous/monitors/', sentryFetcher, { refreshInterval: 5000 });
+  const { data: monitors, error, isLoading } = useSWR('/api/0/organizations/watonomous/monitors/', sentryFetcher, { refreshInterval: 5000, refreshWhenOffline: true });
 
   // process data
   if (monitors) {
