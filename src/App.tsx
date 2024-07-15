@@ -2,8 +2,7 @@ import { useState } from 'react'
 import useSWR from 'swr'
 import './App.css'
 import { healthchecksioFetcher, sentryFetcher } from './utils'
-// import viteLogo from '/vite.svg'
-import watcloudLogo from '/favicon-dark.svg'
+import WATcloudLogo from './assets/watcloud-logo'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -18,11 +17,10 @@ function App() {
   return (
     <>
       <div>
-        <a href="https://cloud.watonomous.ca" target="_blank">
-          <img src={watcloudLogo} className="logo" alt="WATcloud logo" />
+        <a href="https://cloud.watonomous.ca" target="_blank" className="main-logo">
+          <WATcloudLogo />
         </a>
       </div>
-      <h1>WATcloud Status</h1>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}

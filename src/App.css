@@ -36,3 +36,27 @@
 .read-the-docs {
   color: #888;
 }
+
+.main-logo > svg {
+  height: 6rem;
+  mask-image: linear-gradient(
+    60deg,
+    black 25%,
+    rgba(0, 0, 0, 0.2) 50%,
+    black 75%
+  );
+  mask-size: 400%;
+  mask-position: 0%;
+}
+.main-logo > svg:hover {
+  mask-position: 100%;
+  transition:
+    mask-position 1s ease,
+    -webkit-mask-position 1s ease;
+}
+.main-logo {
+  color: rgba(255, 255, 255, 0.87);
+}
+.main-logo:hover {
+  color: rgba(255, 255, 255, 1);
+}
