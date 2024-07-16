@@ -61,43 +61,45 @@ function App() {
 
   return (
     <>
-      <div className="grid lg:grid-cols-2 lg:divide-x mb-8">
-        <div className="lg:text-right lg:pr-8">
+      <div className="mb-8">
+        <div>
           <a href="https://cloud.watonomous.ca" target="_blank" className="main-logo">
             <WATcloudLogo className="inline" />
           </a>
         </div>
-        <div className="lg:text-left lg:pl-8 py-2">
+        <div>
           <h1 className="text-3xl">Infrastructure Status</h1>
           <h2 className="text-lg text-gray-500">An overview of the health of WATcloud</h2>
         </div>
       </div>
-      <div className="mb-8">
-        <h2 className="text-2xl">Useful Links</h2>
-        <ul>
-          <li><a href="https://cloud.watonomous.ca" target="_blank">Documentation</a></li>
-          <li><a href="https://github.com/WATonomous/infrastructure-support/discussions" target="_blank">Announcements</a></li>
-          <li><a href={`./legacy.html${theme == "auto" ? "" : `#theme=${theme}`}`}>Legacy Status Page</a></li>
-          <li><a href="https://github.com/WATonomous/status">Source Code</a></li>
-        </ul>
-      </div>
-      <div className="mb-8">
-        <h2 className="text-2xl">Options</h2>
+      <div className="flex flex-wrap justify-center gap-x-16 gap-y-8 mb-8">
         <div>
-          <span className="text-sm text-gray-500 flex items-center justify-center mb-1">Theme:</span>
-          <OptionGroup
-            options={THEMES}
-            selected={theme}
-            onChange={setTheme}
-            className="mb-4"
-            optionClassName="text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
-            selectedClassName="bg-blue-500 text-white"
-          />
+          <h2 className="text-2xl">Useful Links</h2>
+          <ul>
+            <li><a href="https://cloud.watonomous.ca" target="_blank">Documentation</a></li>
+            <li><a href="https://github.com/WATonomous/infrastructure-support/discussions" target="_blank">Announcements</a></li>
+            <li><a href={`./legacy.html${theme == "auto" ? "" : `#theme=${theme}`}`}>Legacy Status Page</a></li>
+            <li><a href="https://github.com/WATonomous/status">Source Code</a></li>
+          </ul>
         </div>
-        <span className="text-sm text-gray-500 flex items-center justify-center">
-          <input type="checkbox" id="show-internal" checked={showInternal} onChange={() => setShowInternal(!showInternal)} />
-          <label htmlFor="show-internal" className="ml-1">Show internal checks</label>
-        </span>
+        <div>
+          <h2 className="text-2xl">Options</h2>
+          <div>
+            <span className="text-sm text-gray-500 flex items-center justify-center mb-1">Theme:</span>
+            <OptionGroup
+              options={THEMES}
+              selected={theme}
+              onChange={setTheme}
+              className="mb-4"
+              optionClassName="text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
+              selectedClassName="bg-blue-500 text-white"
+            />
+          </div>
+          <span className="text-sm text-gray-500 flex items-center justify-center">
+            <input type="checkbox" id="show-internal" checked={showInternal} onChange={() => setShowInternal(!showInternal)} />
+            <label htmlFor="show-internal" className="ml-1">Show internal checks</label>
+          </span>
+        </div>
       </div>
       <div className="mb-8">
         <h2 className="text-2xl">Healthchecks.io</h2>
