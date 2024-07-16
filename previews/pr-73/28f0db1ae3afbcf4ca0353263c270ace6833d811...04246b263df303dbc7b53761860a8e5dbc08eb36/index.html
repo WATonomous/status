@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/previews/pr-73/28f0db1ae3afbcf4ca0353263c270ace6833d811...04246b263df303dbc7b53761860a8e5dbc08eb36/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/previews/pr-73/28f0db1ae3afbcf4ca0353263c270ace6833d811...04246b263df303dbc7b53761860a8e5dbc08eb36/favicon.png" type="image/png" />
+    <link
+      rel="icon"
+      href="/previews/pr-73/28f0db1ae3afbcf4ca0353263c270ace6833d811...04246b263df303dbc7b53761860a8e5dbc08eb36/favicon-dark.svg"
+      type="image/svg+xml"
+      media="(prefers-color-scheme: dark)"
+    />
+    <link
+      rel="icon"
+      href="/previews/pr-73/28f0db1ae3afbcf4ca0353263c270ace6833d811...04246b263df303dbc7b53761860a8e5dbc08eb36/favicon-dark.png"
+      type="image/png"
+      media="(prefers-color-scheme: dark)"
+    />
+    <meta name="theme-color" content="#111" media="(prefers-color-scheme: dark)">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WATcloud Status</title>
+  <script type="module" crossorigin src="/previews/pr-73/28f0db1ae3afbcf4ca0353263c270ace6833d811...04246b263df303dbc7b53761860a8e5dbc08eb36/assets/index-CEcFHCij.js"></script>
+  <link rel="stylesheet" crossorigin href="/previews/pr-73/28f0db1ae3afbcf4ca0353263c270ace6833d811...04246b263df303dbc7b53761860a8e5dbc08eb36/assets/index-K1d1GC5o.css">
+
+  <body>
+    <script>
+      // This script prevents FOUC (flash of unstyled content) by setting the
+      // `dark` class and `color-scheme` meta attribute before the page is
+      // rendered.
+      const queryParams = new URLSearchParams(document.location.search);
+      if (queryParams.get('theme') === 'light') {
+        document.documentElement.classList.toggle('dark', false);
+        document.documentElement.style.setProperty('color-scheme', 'light');
+      } else if (queryParams.get('theme') === 'dark') {
+        document.documentElement.classList.toggle('dark', true);
+        document.documentElement.style.setProperty('color-scheme', 'dark');
+      } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.classList.toggle('dark', true);
+        document.documentElement.style.setProperty('color-scheme', 'dark');
+      }
+    </script>
+    <div id="root"></div>
+  </body>
+</html>
