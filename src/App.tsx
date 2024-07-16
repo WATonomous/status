@@ -4,23 +4,40 @@ import { HealthchecksioStatus } from './healthchecksio'
 import { useState } from 'react'
 import { SentryStatus } from './sentry'
 
+function updateQueryParams(key: string, val: string, queryParams: URLSearchParams) {
+  queryParams.set(key, val);
+  const newUrl = `${window.location.protocol}//${window.location.host}${window.location.pathname}?${queryParams.toString()}`;
+  window.history.replaceState(null, '', newUrl);
+}
+
 function App() {
-  // Parse options from the URL
-  const options = new URLSearchParams(document.location.search);
+  // Parse queryOptions from the URL
+  const queryParams = new URLSearchParams(document.location.search);
   const globalOptions = {
-    showInternal: options.get('showInternal') === 'true' || false,
+    showInternal: queryParams.get('showInternal') === 'true' || false,
   }
-  const healthchecksioOptions: Record<string, string> = {}
-  const sentryOptions: Record<string, string> = {}
-  for (const [key, value] of options.entries()) {
+  const healthchecksioParams: Record<string, string | boolean | Function> = {
+    showInternal: globalOptions.showInternal,
+    updateQueryParams: (key: string, val: string) => updateQueryParams(`hc_${key}`, val, queryParams),
+  }
+  const sentryParams: Record<string, string | boolean | Function> = {
+    showInternal: globalOptions.showInternal,
+    updateQueryParams: (key: string, val: string) => updateQueryParams(`sentry_${key}`, val, queryParams),
+  }
+  for (const [key, value] of queryParams.entries()) {
     if (key.startsWith('hc_')) {
-      healthchecksioOptions[key.substring('hc_'.length)] = value;
+      healthchecksioParams[key.substring('hc_'.length)] = value;
     } else if (key.startsWith('sentry_')) {
-      sentryOptions[key.substring('sentry_'.length)] = value;
+      sentryParams[key.substring('sentry_'.length)] = value;
     }
   }
 
-  const [showInternal, setShowInternal] = useState(globalOptions.showInternal);
+  const [showInternal, _setShowInternal] = useState(globalOptions.showInternal);
+
+  function setShowInternal(val: boolean) {
+    _setShowInternal(val);
+    updateQueryParams('showInternal', val.toString(), queryParams);
+  }
 
   return (
     <>
@@ -54,12 +71,12 @@ function App() {
       <div className="mb-8">
         <h2 className="text-2xl">Healthchecks.io</h2>
         <h3 className="text-lg text-gray-500">Monitoring data from healthchecks.io</h3>
-        <HealthchecksioStatus showInternal={showInternal} {...healthchecksioOptions} />
+        <HealthchecksioStatus {...healthchecksioParams} />
       </div>
       <div className="mb-8">
         <h2 className="text-2xl">Sentry</h2>
         <h3 className="text-lg text-gray-500">Monitoring data from watonomous.sentry.io</h3>
-        <SentryStatus {...sentryOptions} />
+        <SentryStatus {...sentryParams} />
       </div>
     </>
   )
