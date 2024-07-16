@@ -3,6 +3,7 @@ import WATcloudLogo from './assets/watcloud-logo'
 import { HealthchecksioStatus } from './healthchecksio'
 import { useState } from 'react'
 import { SentryStatus } from './sentry'
+import { OptionGroup } from './option-group'
 
 function updateQueryParams(key: string, val: string, queryParams: URLSearchParams) {
   queryParams.set(key, val);
@@ -10,11 +11,14 @@ function updateQueryParams(key: string, val: string, queryParams: URLSearchParam
   window.history.replaceState(null, '', newUrl);
 }
 
+const THEMES = ['light', 'dark', 'auto'] as const;
+
 function App() {
   // Parse queryOptions from the URL
   const queryParams = new URLSearchParams(document.location.search);
   const globalOptions = {
     showInternal: queryParams.get('showInternal') === 'true' || false,
+    theme: THEMES.includes(queryParams.get('theme') as typeof THEMES[number]) ? queryParams.get('theme') as typeof THEMES[number] : 'auto',
   }
   const healthchecksioParams: Record<string, string | boolean | Function> = {
     showInternal: globalOptions.showInternal,
@@ -33,10 +37,26 @@ function App() {
   }
 
   const [showInternal, _setShowInternal] = useState(globalOptions.showInternal);
-
   function setShowInternal(val: boolean) {
     _setShowInternal(val);
     updateQueryParams('showInternal', val.toString(), queryParams);
+  }
+
+  const [theme, _setTheme] = useState(globalOptions.theme as typeof THEMES[number]);
+  function setTheme(val: typeof THEMES[number]) {
+    _setTheme(val);
+    updateQueryParams('theme', val, queryParams);
+
+    if (val === 'light') {
+      document.documentElement.classList.toggle('dark', false);
+      document.documentElement.style.setProperty('color-scheme', 'light');
+    } else if (val === 'dark') {
+      document.documentElement.classList.toggle('dark', true);
+      document.documentElement.style.setProperty('color-scheme', 'dark');
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.toggle('dark', true);
+      document.documentElement.style.setProperty('color-scheme', 'dark');
+    }
   }
 
   return (
@@ -63,6 +83,17 @@ function App() {
       </div>
       <div className="mb-8">
         <h2 className="text-2xl">Options</h2>
+        <div>
+          <span className="text-sm text-gray-500 flex items-center justify-center mb-1">Theme:</span>
+          <OptionGroup
+            options={THEMES}
+            selected={theme}
+            onChange={setTheme}
+            className="mb-4"
+            optionClassName="text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
+            selectedClassName="bg-blue-500 text-white"
+          />
+        </div>
         <span className="text-sm text-gray-500 flex items-center justify-center">
           <input type="checkbox" id="show-internal" checked={showInternal} onChange={() => setShowInternal(!showInternal)} />
           <label htmlFor="show-internal" className="ml-1">Show internal checks</label>
