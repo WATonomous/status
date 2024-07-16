@@ -74,12 +74,12 @@ function App() {
       </div>
       <div className="flex flex-wrap justify-center gap-x-16 gap-y-8 mb-8">
         <div>
-          <h2 className="text-2xl">Useful Links</h2>
+          <h2 className="text-2xl">Quick Links</h2>
           <ul>
-            <li><a href="https://cloud.watonomous.ca" target="_blank">Documentation</a></li>
+            <li><a href="https://cloud.watonomous.ca/docs/compute-cluster/support-resources" target="_blank">Support Resources</a></li>
             <li><a href="https://github.com/WATonomous/infrastructure-support/discussions" target="_blank">Announcements</a></li>
+            <li><a href="https://cloud.watonomous.ca" target="_blank">Documentation</a></li>
             <li><a href={`./legacy.html${theme == "auto" ? "" : `#theme=${theme}`}`}>Legacy Status Page</a></li>
-            <li><a href="https://github.com/WATonomous/status">Source Code</a></li>
           </ul>
         </div>
         <div>
