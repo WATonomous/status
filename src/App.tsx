@@ -77,7 +77,7 @@ function App() {
         <ul>
           <li><a href="https://cloud.watonomous.ca" target="_blank">Documentation</a></li>
           <li><a href="https://github.com/WATonomous/infrastructure-support/discussions" target="_blank">Announcements</a></li>
-          <li><a href="./legacy.html">Legacy Status Page</a></li>
+          <li><a href={`./legacy.html${theme == "auto" ? "" : `#theme=${theme}`}`}>Legacy Status Page</a></li>
           <li><a href="https://github.com/WATonomous/status">Source Code</a></li>
         </ul>
       </div>
