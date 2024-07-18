@@ -116,7 +116,7 @@ export function HealthchecksioStatus({
               selectedClassName="bg-blue-500 text-white"
             />
           </div>
-          <div className="grid px-8 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 sm:grid-cols-2 gap-4">
+          <div className="grid px-8 3xl:grid-cols-5 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 sm:grid-cols-2 gap-4">
             {Object.entries(groupedChecks).sort().map(([group, checks]) => (
               <div key={group} className="border p-4">
                 <h4 className="text-lg">{group}</h4>
