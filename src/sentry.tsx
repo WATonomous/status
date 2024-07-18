@@ -38,7 +38,7 @@ export function SentryStatus() {
       {monitors && monitors.length > 0 && (
         <>
           <StatusSummary statuses={monitors.flatMap((monitor: any) => monitor.environments?.map((environment: any) => getStatus(environment.status)))} symbolClassName="text-xl" className="mb-4" />
-          <div className="grid px-8 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 sm:grid-cols-2 gap-4">
+          <div className="grid px-8 3xl:grid-cols-5 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 sm:grid-cols-2 gap-4">
             {monitors.map((monitor: any) => (
               <div key={monitor.id} className="border p-4">
                 <h4 className="text-lg">{monitor.name}</h4>

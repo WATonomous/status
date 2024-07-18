@@ -16,6 +16,9 @@ export default {
       },
     },
     extend: {
+      screens: {
+        '3xl': '1920px',
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -74,4 +77,3 @@ export default {
   },
   plugins: [require("tailwindcss-animate")],
 }
-
