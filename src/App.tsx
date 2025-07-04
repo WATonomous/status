@@ -74,28 +74,33 @@ function App() {
         </div>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 max-w-4xl mx-auto">
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 border border-gray-200 dark:border-gray-700">
-          <h2 className="text-2xl font-semibold mb-4 text-center text-gray-900 dark:text-white">Quick Links</h2>
-          <ul className="space-y-3">
-            <li><a href="https://cloud.watonomous.ca/docs/compute-cluster/support-resources" target="_blank" className="text-blue-600 dark:text-blue-400 hover:underline block text-center">Support Resources</a></li>
-            <li><a href="https://groups.google.com/a/watonomous.ca/g/watcloud-compute-cluster-announcements" target="_blank" className="text-blue-600 dark:text-blue-400 hover:underline block text-center">Announcements</a></li>
-            <li><a href="https://cloud.watonomous.ca" target="_blank" className="text-blue-600 dark:text-blue-400 hover:underline block text-center">Documentation</a></li>
-            <li><a href={`./legacy.html${theme == "auto" ? "" : `#theme=${theme}`}`} className="text-blue-600 dark:text-blue-400 hover:underline block text-center">Legacy Status Page</a></li>
-          </ul>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 max-w-3xl mx-auto">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-3 border border-gray-200 dark:border-gray-700">
+          <h2 className="text-lg font-semibold mb-2 text-center text-gray-900 dark:text-white">Quick Links</h2>
+          <div className="flex flex-wrap justify-center gap-2 text-sm">
+            <a href="https://cloud.watonomous.ca/docs/compute-cluster/support-resources" target="_blank" className="text-blue-600 dark:text-blue-400 hover:underline">Support</a>
+            <span className="text-gray-400">•</span>
+            <a href="https://groups.google.com/a/watonomous.ca/g/watcloud-compute-cluster-announcements" target="_blank" className="text-blue-600 dark:text-blue-400 hover:underline">Announcements</a>
+            <span className="text-gray-400">•</span>
+            <a href="https://cloud.watonomous.ca" target="_blank" className="text-blue-600 dark:text-blue-400 hover:underline">Docs</a>
+            <span className="text-gray-400">•</span>
+            <a href={`./legacy.html${theme == "auto" ? "" : `#theme=${theme}`}`} className="text-blue-600 dark:text-blue-400 hover:underline">Legacy</a>
+          </div>
         </div>
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 border border-gray-200 dark:border-gray-700">
-          <h2 className="text-2xl font-semibold mb-4 text-center text-gray-900 dark:text-white">Options</h2>
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-3 border border-gray-200 dark:border-gray-700">
+          <h2 className="text-lg font-semibold mb-2 text-center text-gray-900 dark:text-white">Options</h2>
           <div className="text-center">
-            <span className="text-sm text-gray-500 dark:text-gray-400 block mb-2">Theme:</span>
-            <OptionGroup
-              options={THEMES}
-              selected={theme}
-              onChange={setTheme}
-              className="mb-6"
-              optionClassName="text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
-              selectedClassName="bg-blue-500 text-white"
-            />
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <span className="text-sm text-gray-500 dark:text-gray-400">Theme:</span>
+              <OptionGroup
+                options={THEMES}
+                selected={theme}
+                onChange={setTheme}
+                className=""
+                optionClassName="text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
+                selectedClassName="bg-blue-500 text-white"
+              />
+            </div>
             <div className="flex items-center justify-center">
               <input type="checkbox" id="show-internal" checked={showInternal} onChange={() => setShowInternal(!showInternal)} className="mr-2" />
               <label htmlFor="show-internal" className="text-sm text-gray-600 dark:text-gray-400">Show internal checks</label>
