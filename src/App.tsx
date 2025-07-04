@@ -77,7 +77,7 @@ function App() {
           <h2 className="text-2xl">Quick Links</h2>
           <ul>
             <li><a href="https://cloud.watonomous.ca/docs/compute-cluster/support-resources" target="_blank">Support Resources</a></li>
-            <li><a href="https://github.com/WATonomous/infrastructure-support/discussions" target="_blank">Announcements</a></li>
+            <li><a href="https://groups.google.com/a/watonomous.ca/g/watcloud-compute-cluster-announcements" target="_blank">Announcements</a></li>
             <li><a href="https://cloud.watonomous.ca" target="_blank">Documentation</a></li>
             <li><a href={`./legacy.html${theme == "auto" ? "" : `#theme=${theme}`}`}>Legacy Status Page</a></li>
           </ul>
