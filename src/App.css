@@ -1,11 +1,12 @@
 #root {
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
+  text-align: left;
+  min-height: 100vh;
 }
 
 .main-logo > svg {
-  height: 5rem;
+  height: 6rem;
   mask-image: linear-gradient(
     60deg,
     black 25%,
@@ -14,6 +15,7 @@
   );
   mask-size: 400%;
   mask-position: 0%;
+  transition: mask-position 1s ease;
 }
 .main-logo > svg:hover {
   mask-position: 100%;
@@ -23,8 +25,10 @@
 }
 
 .main-logo {
-  @apply text-inherit;
-  &:hover {
-    @apply text-inherit;
-  }
+  color: inherit;
+  display: inline-block;
+}
+
+.main-logo:hover {
+  color: inherit;
 }

@@ -4,6 +4,7 @@ import { HealthchecksioStatus } from './healthchecksio'
 import { useState } from 'react'
 import { SentryStatus } from './sentry'
 import { OptionGroup } from './option-group'
+import { MaintenanceWindows } from './maintenance'
 
 function updateQueryParams(key: string, val: string, queryParams: URLSearchParams) {
   queryParams.set(key, val);
@@ -74,8 +75,8 @@ function App() {
       </div>
       <div className="flex flex-wrap justify-center gap-x-16 gap-y-8 mb-8">
         <div>
-          <h2 className="text-2xl">Quick Links</h2>
-          <ul>
+          <h2 className="text-xl">Quick Links</h2>
+          <ul className="text-sm">
             <li><a href="https://cloud.watonomous.ca/docs/compute-cluster/support-resources" target="_blank">Support Resources</a></li>
             <li><a href="https://groups.google.com/a/watonomous.ca/g/watcloud-compute-cluster-announcements" target="_blank">Announcements</a></li>
             <li><a href="https://cloud.watonomous.ca" target="_blank">Documentation</a></li>
@@ -83,33 +84,43 @@ function App() {
           </ul>
         </div>
         <div>
-          <h2 className="text-2xl">Options</h2>
+          <h2 className="text-xl">Options</h2>
           <div>
-            <span className="text-sm text-gray-500 flex items-center justify-center mb-1">Theme:</span>
+            <span className="text-xs text-gray-500 flex items-center justify-center mb-1">Theme:</span>
             <OptionGroup
               options={THEMES}
               selected={theme}
               onChange={setTheme}
-              className="mb-4"
-              optionClassName="text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
+              className="mb-2"
+              optionClassName="text-gray-900 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white text-xs px-2 py-1"
               selectedClassName="bg-blue-500 text-white"
             />
           </div>
-          <span className="text-sm text-gray-500 flex items-center justify-center">
+          <span className="text-xs text-gray-500 flex items-center justify-center">
             <input type="checkbox" id="show-internal" checked={showInternal} onChange={() => setShowInternal(!showInternal)} />
             <label htmlFor="show-internal" className="ml-1">Show internal checks</label>
           </span>
         </div>
       </div>
-      <div className="mb-8">
-        <h2 className="text-2xl">Healthchecks.io</h2>
-        <h3 className="text-lg text-gray-500">Monitoring data from healthchecks.io</h3>
-        <HealthchecksioStatus {...healthchecksioParams} />
-      </div>
-      <div className="mb-8">
-        <h2 className="text-2xl">Sentry</h2>
-        <h3 className="text-lg text-gray-500">Monitoring data from watonomous.sentry.io</h3>
-        <SentryStatus {...sentryParams} />
+
+      <div className="space-y-8">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold mb-2 text-gray-900 dark:text-white">Scheduled Maintenance</h2>
+          <h3 className="text-base text-gray-600 dark:text-gray-400 mb-4">Planned maintenance windows and outages</h3>
+          <MaintenanceWindows />
+        </div>
+
+        <div className="mb-8">
+          <h2 className="text-2xl">Healthchecks.io</h2>
+          <h3 className="text-lg text-gray-500">Monitoring data from healthchecks.io</h3>
+          <HealthchecksioStatus {...healthchecksioParams} />
+        </div>
+
+        <div className="mb-8">
+          <h2 className="text-2xl">Sentry</h2>
+          <h3 className="text-lg text-gray-500">Monitoring data from watonomous.sentry.io</h3>
+          <SentryStatus {...sentryParams} />
+        </div>
       </div>
     </>
   )
