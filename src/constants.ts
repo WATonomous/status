@@ -30,3 +30,26 @@ export const STATUS_SYMBOLS = {
   [Status.Neutral]: '🟡',
   [Status.Bad]: '🔴',
 } as const;
+
+export enum MaintenanceStatus {
+  Upcoming = 'upcoming',
+  Ongoing = 'ongoing',
+  Completed = 'completed',
+}
+
+export const MAINTENANCE_SYMBOLS = {
+  [MaintenanceStatus.Upcoming]: '🔔',
+  [MaintenanceStatus.Ongoing]: '🔧',
+  [MaintenanceStatus.Completed]: '✅',
+} as const;
+
+export interface MaintenanceWindow {
+  id: string;
+  title: string;
+  description: string;
+  startTime: Date;
+  endTime: Date;
+  status: MaintenanceStatus;
+  affectedServices?: string[];
+  detailsUrl?: string;
+}

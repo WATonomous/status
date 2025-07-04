@@ -4,6 +4,7 @@ import { HealthchecksioStatus } from './healthchecksio'
 import { useState } from 'react'
 import { SentryStatus } from './sentry'
 import { OptionGroup } from './option-group'
+import { MaintenanceWindows } from './maintenance'
 
 function updateQueryParams(key: string, val: string, queryParams: URLSearchParams) {
   queryParams.set(key, val);
@@ -100,6 +101,11 @@ function App() {
             <label htmlFor="show-internal" className="ml-1">Show internal checks</label>
           </span>
         </div>
+      </div>
+      <div className="mb-8">
+        <h2 className="text-2xl">Scheduled Maintenance</h2>
+        <h3 className="text-lg text-gray-500">Planned maintenance windows and outages</h3>
+        <MaintenanceWindows />
       </div>
       <div className="mb-8">
         <h2 className="text-2xl">Healthchecks.io</h2>
